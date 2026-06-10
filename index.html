@@ -657,22 +657,11 @@
     }
 
     .iter-card {
-      display: none;
-    }
-    .iter-card.visible {
       display: block;
     }
 
-    .iter-nav {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-
     .iter-nav-btn {
+      display: none; /* kept for compat, not rendered */
       padding: 8px 18px;
       border-radius: var(--radius-pill);
       border: 1.5px solid var(--border);
@@ -1124,13 +1113,9 @@ function renderFeaturePanel(feature) {
     </button>`).join("");
 
   const iterCards = rest.map((iter, i) => `
-    <div class="iter-card${i === 0 ? ' visible' : ''}" id="itercard-${feature.id}-${i}">
+    <div class="iter-card" id="itercard-${feature.id}-${i}">
       ${renderIteration(iter, i + 1, feature.id)}
-      <div class="iter-nav">
-        <button class="iter-nav-btn" onclick="showIteration('${feature.id}', ${i - 1})"${i === 0 ? ' disabled' : ''}>← Previous</button>
-        <span class="iter-nav-pos">${i + 1} of ${rest.length}</span>
-        <button class="iter-nav-btn" onclick="showIteration('${feature.id}', ${i + 1})"${i === rest.length - 1 ? ' disabled' : ''}>Next →</button>
-      </div>
+      ${i < rest.length - 1 ? '<hr class="iteration-divider">' : ''}
     </div>`).join("");
 
   return `${introHtml}
@@ -1152,16 +1137,27 @@ function renderFeaturePanel(feature) {
 }
 
 function showIteration(featureId, idx) {
-  const feature = (APP_DATA.features || []).find(f => f.id === featureId);
-  if (!feature) return;
-  const count = (feature.iterations || []).length - 1;
-  if (idx < 0 || idx >= count) return;
+  const el = document.getElementById(`itercard-${featureId}-${idx}`);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
+function setupIterScrollspy(featureId, count) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const parts = entry.target.id.split('-');
+        const idx = parseInt(parts[parts.length - 1]);
+        if (isNaN(idx)) return;
+        for (let i = 0; i < count; i++) {
+          const btn = document.getElementById(`idx-${featureId}-${i}`);
+          if (btn) btn.className = 'index-item' + (i === idx ? ' active' : '');
+        }
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
   for (let i = 0; i < count; i++) {
-    const card = document.getElementById(`itercard-${featureId}-${i}`);
-    const btn  = document.getElementById(`idx-${featureId}-${i}`);
-    if (card) card.className = 'iter-card' + (i === idx ? ' visible' : '');
-    if (btn)  btn.className  = 'index-item'  + (i === idx ? ' active'  : '');
+    const el = document.getElementById(`itercard-${featureId}-${i}`);
+    if (el) observer.observe(el);
   }
 }
 
@@ -1208,6 +1204,10 @@ function buildUI() {
     panel.setAttribute("role", "tabpanel");
     panel.innerHTML = renderFeaturePanel(feature);
     main.appendChild(panel);
+
+    // Wire up scrollspy for this feature's iterations
+    const iterCount = (feature.iterations || []).length - 1;
+    if (iterCount > 0) setupIterScrollspy(feature.id, iterCount);
   });
 
   // Handle deep-link hash on load
