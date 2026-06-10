@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Repository</title>
+  <script src="data.js"></script>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FDFDFD;
+      --surface: #FEFEFE;
+      --border: #EAE6F0;
+      --text-primary: #1C0F35;
+      --text-secondary: #7A7A84;
+      --text-muted: #ABABAB;
+      --accent: #7A71DA;
+      --accent-dark: #6259BF;
+      --accent-light: #EEEAFF;
+      --star-active: #F5A623;
+      --vote-active: #7A71DA;
+      --tag-bg: #EEEAFF;
+      --tag-text: #5A52B8;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 3px rgba(122,113,218,0.07), 0 1px 2px rgba(122,113,218,0.04);
+      --shadow-md: 0 4px 14px rgba(122,113,218,0.11), 0 2px 4px rgba(122,113,218,0.06);
+      --shadow-card: 0 2px 10px rgba(122,113,218,0.09), 0 1px 3px rgba(122,113,218,0.05);
+      --tab-active-bg: #ECEAFF;
+      --tab-active-text: #5A52B8;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ─── Header ───────────────────────────────────── */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .site-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .last-updated {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── Tab Bar ──────────────────────────────────── */
+    .tab-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky;
+      top: 64px;
+      z-index: 99;
+    }
+
+    .tab-list {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      padding: 12px 0;
+      list-style: none;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-list::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      border-color: #C4B5E8;
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      background: var(--tab-active-bg);
+      border-color: var(--tab-active-bg);
+      color: var(--tab-active-text);
+    }
+
+    /* ─── Main Content ─────────────────────────────── */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 36px 40px 80px;
+    }
+
+    /* ─── Feature Panel ────────────────────────────── */
+    .feature-panel { display: none; }
+    .feature-panel.active { display: block; }
+
+    /* ─── Iteration Block ──────────────────────────── */
+    .iteration-block {
+      margin-bottom: 56px;
+    }
+
+    .iteration-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .iteration-meta { flex: 1; }
+
+    .iteration-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .updated-on-badge {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 2px 9px;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .iteration-sub {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .iteration-date {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .iteration-designer {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .iteration-designer::before { content: "·"; margin-right: 12px; }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+    }
+
+    .iteration-notes {
+      margin-top: 8px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    /* ─── Action Buttons (header row) ─────────────── */
+    .iteration-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .action-btn svg { flex-shrink: 0; }
+
+    .action-btn:hover {
+      border-color: #C4B5E8;
+      color: var(--text-primary);
+    }
+
+    .action-btn.starred {
+      border-color: var(--star-active);
+      color: var(--star-active);
+      background: #FFF7E8;
+    }
+
+    .action-btn.starred svg { fill: var(--star-active); stroke: var(--star-active); }
+
+    .action-btn.voted {
+      border-color: var(--vote-active);
+      color: var(--vote-active);
+      background: var(--accent-light);
+    }
+
+    .vote-count {
+      font-weight: 600;
+      min-width: 14px;
+      text-align: center;
+    }
+
+    /* ─── Prototype Grid ───────────────────────────── */
+    .prototype-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .prototype-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Prototype Card ───────────────────────────── */
+    .proto-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .proto-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .proto-platform {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .platform-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .proto-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── Annotations ─────────────────────────────── */
+    .annotations {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      max-width: 960px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .annotation-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .annotation-row:last-child { border-bottom: none; }
+    .annotation-row.annotation-header {
+      background: #F5F3F9;
+    }
+    .annotation-col-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-right: 1px solid var(--border);
+    }
+    .annotation-col-label:last-child { border-right: none; }
+
+    .annotation-section {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      padding: 10px 14px;
+      background: #F9F8FC;
+      border-right: 1px solid var(--border);
+      line-height: 1.45;
+    }
+
+    .annotation-detail {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      line-height: 1.55;
+      border-right: 1px solid var(--border);
+    }
+
+    .annotation-config {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      line-height: 1.55;
+    }
+
+    /* ─── Handover file section ────────────────────── */
+    .handover-section {
+      margin-top: 16px;
+      max-width: 760px;
+    }
+
+    .handover-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .design-file-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8125rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 7px 13px;
+      border: 1.5px solid #C8C4EE;
+      border-radius: var(--radius-pill);
+      background: var(--accent-light);
+      transition: all 0.15s;
+    }
+    .design-file-link:hover {
+      background: #DDDAEF;
+      border-color: var(--accent);
+    }
+
+    /* ─── Figma Embed Area ─────────────────────────── */
+    .embed-wrapper {
+      position: relative;
+      width: 100%;
+      background: #FFFFFF;
+    }
+    .embed-wrapper.mobile-frame  { height: 780px; }
+    .embed-wrapper.desktop-frame { height: 620px; }
+
+    .embed-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ─── Click-to-load placeholder ───────────────── */
+    .embed-cta {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: #FFFFFF;
+      cursor: default;
+    }
+
+    .embed-cta-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .embed-cta-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .embed-cta-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: -8px;
+    }
+
+    .load-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      background: #7A71DA;
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 4px;
+    }
+    .load-btn:hover  { background: #6259BF; }
+    .load-btn:active { transform: scale(0.97); }
+
+    .loading-spinner {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-spinner.visible { display: flex; }
+
+    /* ─── No-URL placeholder ──────────────────────── */
+    .embed-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #FFFFFF;
+      color: var(--text-muted);
+    }
+    .embed-placeholder span  { font-size: 0.8125rem; font-weight: 500; }
+    .embed-placeholder small { font-size: 0.75rem; opacity: 0.7; margin-top: -4px; }
+
+    /* ─── Screenshot display ──────────────────────── */
+    .screenshot-scroll {
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #FFFFFF;
+      scrollbar-width: thin;
+    }
+    .screenshot-scroll.mobile-frame {
+      height: 680px;
+      max-width: 390px;
+      margin: 0 auto;
+    }
+    .screenshot-scroll.desktop-frame {
+      height: 540px;
+    }
+    .screenshot-scroll img {
+      width: 100%;
+      display: block;
+    }
+    /* Single card stretches wider when alone */
+    .prototype-grid.single-col {
+      grid-template-columns: 1fr;
+      max-width: 860px;
+    }
+
+    /* ─── Section spec embed ──────────────────────── */
+    .spec-embed-block {
+      margin-top: 24px;
+    }
+
+    .spec-embed-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .spec-embed-shell {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #FFFFFF;
+      position: relative;
+    }
+
+    /* spec embed uses click-to-load too — same .embed-cta pattern */
+    .spec-embed-shell .embed-cta { border-radius: var(--radius-md); }
+
+    .spec-iframe-area {
+      width: 100%;
+      height: 780px;   /* tall enough for the deliverable frame */
+      display: none; /* shown after load */
+      position: relative;
+    }
+    .spec-iframe-area.loaded { display: block; }
+
+    .spec-iframe-area iframe {
+      width: 100%; height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .spec-embed-cta-wrap {
+      height: 220px;
+      position: relative;
+    }
+
+    /* ─── Iterations collapse ──────────────────────── */
+    .iterations-collapse {
+      margin-top: 48px;
+    }
+
+    .iterations-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .iterations-toggle:hover {
+      border-color: #C4B5E8;
+      box-shadow: var(--shadow-md);
+    }
+
+    .iterations-toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .iterations-toggle-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--text-secondary);
+    }
+
+    .iterations-toggle-label {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .iterations-toggle-count {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+      font-weight: 400;
+    }
+
+    .iterations-toggle-chevron {
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .iterations-toggle.open .iterations-toggle-chevron {
+      transform: rotate(180deg);
+    }
+
+    .iterations-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+    }
+
+    .iterations-body.open {
+      max-height: 99999px; /* large enough for any content */
+    }
+
+    .iterations-body-inner {
+      padding-top: 32px;
+    }
+
+    /* ─── Divider ──────────────────────────────────── */
+    .iteration-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    /* ─── Empty feature state ──────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg { margin-bottom: 16px; opacity: 0.3; }
+    .empty-state h3 { font-size: 1rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 6px; }
+    .empty-state p { font-size: 0.875rem; }
+
+    /* ─── Toast ────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1C0F35;
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ─── Scrollbar (subtle) ───────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ─── Header ──────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <span class="site-title" id="site-title">Design Repository</span>
+    <span class="last-updated" id="last-updated"></span>
+  </div>
+</header>
+
+<!-- ─── Tab Bar ─────────────────────────────────────── -->
+<nav class="tab-bar" aria-label="Features">
+  <ul class="tab-list" id="tab-list" role="tablist"></ul>
+</nav>
+
+<!-- ─── Main Content ────────────────────────────────── -->
+<main class="main" id="main"></main>
+
+<!-- ─── Toast ───────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+
+<script>
+// ──────────────────────────────────────────────────────
+//  UTILITIES
+// ──────────────────────────────────────────────────────
+
+/** Convert any figma.com URL to embed.figma.com URL, stripping all chrome */
+function toFigmaEmbedUrl(url) {
+  if (!url) return null;
+  url = url.trim();
+  if (!url.startsWith("http")) return null;
+
+  try {
+    const u = new URL(url);
+    u.host = "embed.figma.com";
+    u.searchParams.set("embed-host", "share");
+    // Hide the prototype sidebar so only the canvas is shown
+    u.searchParams.set("show-proto-sidebar", "0");
+    // Hide the Figma bottom bar / UI chrome
+    u.searchParams.set("hide-ui", "1");
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+/** Format ISO date → "Jun 7, 2025" */
+function formatDate(iso) {
+  if (!iso) return "";
+  try {
+    return new Date(iso + "T00:00:00").toLocaleDateString("en-GB", {
+      day: "numeric", month: "short", year: "numeric"
+    });
+  } catch { return iso; }
+}
+
+/** LocalStorage helpers */
+const LS_KEY = "design-repo-v1";
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch { return {}; }
+}
+function saveState(s) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch {}
+}
+let state = loadState();  // { iterationId: { starred, voted, voteCount } }
+
+function getIterState(id) {
+  return state[id] || { starred: false, voted: false, voteCount: 0 };
+}
+function setIterState(id, patch) {
+  state[id] = { ...getIterState(id), ...patch };
+  saveState(state);
+}
+
+/** Show toast */
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+// ──────────────────────────────────────────────────────
+//  SVG ICONS
+// ──────────────────────────────────────────────────────
+const ICONS = {
+  star: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  thumbsUp: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>`,
+  copy: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  open: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`,
+  figma: `<svg width="11" height="16" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5Z" fill="#1ABCFE"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19V47.5A9.5 9.5 0 0 1 0 47.5Z" fill="#0ACF83"/><path d="M19 0V19H28.5A9.5 9.5 0 1 0 19 0Z" fill="#FF7262"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" fill="#F24E1E"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" fill="#FF7262"/></svg>`,
+  mobile: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+  desktop: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  placeholder: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+};
+
+// ──────────────────────────────────────────────────────
+//  RENDER
+// ──────────────────────────────────────────────────────
+
+function renderEmbedCard(platform, slot) {
+  const isPlatformMobile = platform === "mobile";
+  const frameClass = isPlatformMobile ? "mobile-frame" : "desktop-frame";
+  const label = slot.caption || (isPlatformMobile ? "Mobile" : "Desktop");
+
+  // Screenshot mode — render a scrollable image panel
+  if (slot.screenshotUrl) {
+    return `
+      <div class="proto-card">
+        <div class="proto-card-header">
+          <div class="proto-platform">
+            <div class="platform-icon">${isPlatformMobile ? ICONS.mobile : ICONS.desktop}</div>
+            ${isPlatformMobile ? "Mobile" : "Desktop"}
+          </div>
+          <span class="proto-caption">${slot.caption || ""}</span>
+        </div>
+        <div class="screenshot-scroll ${frameClass}">
+          <img src="${slot.screenshotUrl}" alt="${label}" loading="lazy" />
+        </div>
+      </div>`;
+  }
+
+  // Prototype embed mode
+  const embedUrl = toFigmaEmbedUrl(slot.figmaUrl);
+
+  // No URL → static placeholder
+  const embedContent = embedUrl
+    ? `<!-- click-to-load: src injected on button click -->
+       <div class="embed-cta" id="cta-${platform}-${Math.random().toString(36).slice(2,8)}">
+         <div class="embed-cta-icon">${isPlatformMobile ? ICONS.mobile : ICONS.desktop}</div>
+         <div class="embed-cta-title">${label}</div>
+         <div class="embed-cta-sub">Click to load interactive prototype</div>
+         <button class="load-btn" onclick="loadEmbed(this, '${embedUrl}')">
+           ${ICONS.figma}&nbsp;Load prototype
+         </button>
+       </div>`
+    : `<div class="embed-placeholder">
+         ${ICONS.placeholder}
+         <span>Figma prototype</span>
+         <small>Add a Figma URL in data.js to embed here</small>
+       </div>`;
+
+  return `
+    <div class="proto-card">
+      <div class="proto-card-header">
+        <div class="proto-platform">
+          <div class="platform-icon">${isPlatformMobile ? ICONS.mobile : ICONS.desktop}</div>
+          ${isPlatformMobile ? "Mobile" : "Desktop"}
+        </div>
+        <span class="proto-caption">${slot.caption || ""}</span>
+      </div>
+      <div class="embed-wrapper ${frameClass}">
+        ${embedContent}
+      </div>
+    </div>`;
+}
+
+function toFigmaDesignEmbedUrl(url) {
+  // Design embeds: keep full Figma viewer chrome so annotations panel is accessible.
+  // Do NOT add hide-ui, show-proto-sidebar, or any chrome-stripping params.
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    u.host = "embed.figma.com";
+    u.searchParams.set("embed-host", "share");
+    // Preserve annotations visibility — remove any stray hide-ui param if present
+    u.searchParams.delete("hide-ui");
+    u.searchParams.delete("show-proto-sidebar");
+    return u.toString();
+  } catch { return null; }
+}
+
+function renderSectionEmbed(iter) {
+  if (!iter.sectionEmbedUrl) return "";
+  const embedUrl = toFigmaDesignEmbedUrl(iter.sectionEmbedUrl);
+  if (!embedUrl) return "";
+  const uid = `spec-${iter.id}`;
+  return `
+    <div class="spec-embed-block">
+      <div class="spec-embed-label">Design spec — zoom, pan &amp; view annotations</div>
+      <div class="spec-embed-shell">
+        <div class="spec-embed-cta-wrap" id="cta-wrap-${uid}">
+          <div class="embed-cta">
+            <div class="embed-cta-icon">${ICONS.figma}</div>
+            <div class="embed-cta-title">Deliverable spec view</div>
+            <div class="embed-cta-sub">Zoom &amp; pan · click annotation markers to read specs</div>
+            <button class="load-btn" onclick="loadSpecEmbed('${uid}', '${embedUrl}')">
+              ${ICONS.figma}&nbsp;Load design spec
+            </button>
+          </div>
+        </div>
+        <div class="spec-iframe-area" id="iframe-area-${uid}">
+          <iframe id="iframe-${uid}" allowfullscreen allow="fullscreen" title="Design spec"></iframe>
+        </div>
+      </div>
+    </div>`;
+}
+
+/**
+ * Decide whether to show screenshot cards or prototype embeds.
+ * - If any slot has screenshotUrl → screenshot mode: only render slots that have content
+ * - Otherwise → prototype mode: always render both columns (with placeholders)
+ */
+function renderScreensOrPrototypes(iter) {
+  const m = iter.mobile  || {};
+  const d = iter.desktop || {};
+  const hasMobileShot   = !!m.screenshotUrl;
+  const hasDesktopShot  = !!d.screenshotUrl;
+  const isScreenshotMode = hasMobileShot || hasDesktopShot;
+
+  if (isScreenshotMode) {
+    const cards = [];
+    if (hasMobileShot)  cards.push(renderEmbedCard("mobile",  m));
+    if (hasDesktopShot) cards.push(renderEmbedCard("desktop", d));
+    const cls = cards.length === 1 ? "prototype-grid single-col" : "prototype-grid";
+    return `<div class="${cls}">${cards.join("")}</div>`;
+  }
+
+  // Prototype mode: show both columns always
+  return `<div class="prototype-grid">
+    ${renderEmbedCard("mobile",  m)}
+    ${renderEmbedCard("desktop", d)}
+  </div>`;
+}
+
+function renderIteration(iter, index, featureId) {
+  const s = getIterState(iter.id);
+  const tagsHtml = (iter.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
+
+  return `
+    <div class="iteration-block" id="iter-${iter.id}">
+      <div class="iteration-header">
+        <div class="iteration-meta">
+          <div class="iteration-label">
+            ${iter.label || `Iteration set ${index + 1}`}
+            ${index === 0 && iter.date ? `<span class="updated-on-badge">Updated ${formatDate(iter.date)}</span>` : ""}
+          </div>
+          <div class="iteration-sub">
+            ${iter.date && index !== 0 ? `<span class="iteration-date">${formatDate(iter.date)}</span>` : ""}
+            ${iter.designer ? `<span class="iteration-designer">${iter.designer}</span>` : ""}
+            ${tagsHtml ? `<div class="tags">${tagsHtml}</div>` : ""}
+          </div>
+          ${iter.notes ? `<p class="iteration-notes">${iter.notes}</p>` : ""}
+          ${iter.annotations && iter.annotations.length ? (() => {
+            const hasConfig = iter.annotations.some(a => a.configuration !== undefined);
+            const headerRow = hasConfig ? `
+              <div class="annotation-row annotation-header">
+                <div class="annotation-col-label">Section</div>
+                <div class="annotation-col-label">Description</div>
+                <div class="annotation-col-label">Configuration</div>
+              </div>` : `
+              <div class="annotation-row annotation-header" style="grid-template-columns:160px 1fr">
+                <div class="annotation-col-label">Section</div>
+                <div class="annotation-col-label">Description</div>
+              </div>`;
+            const rows = iter.annotations.map(a => hasConfig ? `
+              <div class="annotation-row">
+                <div class="annotation-section">${a.section}</div>
+                <div class="annotation-detail">${a.detail}</div>
+                <div class="annotation-config">${a.configuration || ""}</div>
+              </div>` : `
+              <div class="annotation-row" style="grid-template-columns:160px 1fr">
+                <div class="annotation-section">${a.section}</div>
+                <div class="annotation-detail" style="border-right:none">${a.detail}</div>
+              </div>`).join("");
+            return `<div class="annotations">${headerRow}${rows}</div>`;
+          })() : ""}
+          ${iter.designFileUrl && iter.sectionEmbedUrl ? `
+            <div class="handover-section">
+              <div class="handover-label">${iter.label || "Iteration"} · Figma handover file</div>
+              <a class="design-file-link" href="${iter.designFileUrl}" target="_blank" rel="noopener">
+                ${ICONS.figma}&nbsp;Open design file
+              </a>
+            </div>` : ""}
+        </div>
+        <div class="iteration-actions">
+          <button class="action-btn ${s.starred ? "starred" : ""}"
+            onclick="toggleStar('${iter.id}', this)"
+            title="${s.starred ? "Remove bookmark" : "Bookmark this iteration"}">
+            ${ICONS.star} ${s.starred ? "Bookmarked" : "Bookmark"}
+          </button>
+          <button class="action-btn ${s.voted ? "voted" : ""}"
+            onclick="toggleVote('${iter.id}', this)"
+            title="Vote for this iteration">
+            ${ICONS.thumbsUp} <span class="vote-count" id="vc-${iter.id}">${s.voteCount}</span>
+          </button>
+          <button class="action-btn"
+            onclick="copyLink('${featureId}', '${iter.id}')"
+            title="Copy link to this iteration">
+            ${ICONS.copy}
+          </button>
+        </div>
+      </div>
+
+      ${renderScreensOrPrototypes(iter)}
+      ${renderSectionEmbed(iter)}
+    </div>`;
+}
+
+function renderFeaturePanel(feature) {
+  const iters = feature.iterations || [];
+  if (iters.length === 0) {
+    const msg = feature.emptyStateMessage || "Add iterations in data.js to get started.";
+    return `<div class="empty-state">
+      ${ICONS.placeholder}
+      <h3>${feature.emptyStateTitle || "No iterations yet"}</h3>
+      <p>${msg}</p>
+    </div>`;
+  }
+
+  const [first, ...rest] = iters;
+  const collapseId = `collapse-${feature.id}`;
+
+  // Finalised iteration always shown at top
+  const finalisedHtml = renderIteration(first, 0, feature.id);
+
+  if (rest.length === 0) return finalisedHtml;
+
+  // Build the collapsible body (remaining iterations)
+  const restHtml = rest.map((iter, i) =>
+    renderIteration(iter, i + 1, feature.id) +
+    (i < rest.length - 1 ? `<hr class="iteration-divider">` : "")
+  ).join("\n");
+
+  const chevronIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const stackIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
+
+  return `
+    ${finalisedHtml}
+    <div class="iterations-collapse" id="${collapseId}-wrap">
+      <button class="iterations-toggle" id="${collapseId}-btn" onclick="toggleIterations('${collapseId}')" aria-expanded="false">
+        <div class="iterations-toggle-left">
+          <div class="iterations-toggle-icon">${stackIcon}</div>
+          <div>
+            <div class="iterations-toggle-label">Show iterations</div>
+            <div class="iterations-toggle-count">${rest.length} iteration${rest.length !== 1 ? "s" : ""}</div>
+          </div>
+        </div>
+        <div class="iterations-toggle-chevron">${chevronIcon}</div>
+      </button>
+      <div class="iterations-body" id="${collapseId}-body">
+        <div class="iterations-body-inner">
+          ${restHtml}
+        </div>
+      </div>
+    </div>`;
+}
+
+function toggleIterations(collapseId) {
+  const btn  = document.getElementById(`${collapseId}-btn`);
+  const body = document.getElementById(`${collapseId}-body`);
+  const isOpen = body.classList.contains("open");
+  body.classList.toggle("open", !isOpen);
+  btn.classList.toggle("open", !isOpen);
+  btn.setAttribute("aria-expanded", String(!isOpen));
+  // Update label
+  const label = btn.querySelector(".iterations-toggle-label");
+  label.textContent = isOpen ? "Show iterations" : "Hide iterations";
+}
+
+function buildUI() {
+  const data = APP_DATA;
+
+  // Title
+  document.getElementById("site-title").textContent = data.title || "Design Repository";
+  document.title = data.title || "Design Repository";
+
+  // Last updated
+  const allDates = (data.features || [])
+    .flatMap(f => (f.iterations || []).map(i => i.date))
+    .filter(Boolean)
+    .sort()
+    .reverse();
+  if (allDates.length) {
+    document.getElementById("last-updated").textContent =
+      "Last updated: " + formatDate(allDates[0]);
+  }
+
+  const tabList = document.getElementById("tab-list");
+  const main = document.getElementById("main");
+
+  (data.features || []).forEach((feature, idx) => {
+    // Tab button
+    const li = document.createElement("li");
+    li.setAttribute("role", "presentation");
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (idx === 0 ? " active" : "");
+    btn.setAttribute("role", "tab");
+    btn.setAttribute("aria-controls", `panel-${feature.id}`);
+    btn.setAttribute("aria-selected", idx === 0 ? "true" : "false");
+    btn.textContent = feature.name;
+    btn.dataset.featureId = feature.id;
+    btn.addEventListener("click", () => activateTab(feature.id));
+    li.appendChild(btn);
+    tabList.appendChild(li);
+
+    // Panel
+    const panel = document.createElement("section");
+    panel.id = `panel-${feature.id}`;
+    panel.className = "feature-panel" + (idx === 0 ? " active" : "");
+    panel.setAttribute("role", "tabpanel");
+    panel.innerHTML = renderFeaturePanel(feature);
+    main.appendChild(panel);
+  });
+
+  // Handle deep-link hash on load
+  handleHashNavigation();
+}
+
+function activateTab(featureId) {
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    const isActive = btn.dataset.featureId === featureId;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
+  document.querySelectorAll(".feature-panel").forEach(panel => {
+    panel.classList.toggle("active", panel.id === `panel-${featureId}`);
+  });
+  // Update URL hash (no navigation)
+  history.replaceState(null, "", `#${featureId}`);
+}
+
+function handleHashNavigation() {
+  const hash = location.hash.replace("#", "");
+  if (!hash) return;
+
+  // Check if it's a feature tab
+  const featureMatch = (APP_DATA.features || []).find(f => f.id === hash);
+  if (featureMatch) { activateTab(featureMatch.id); return; }
+
+  // Check if it's an iteration anchor (featureId--iterId format)
+  const parts = hash.split("--");
+  if (parts.length === 2) {
+    const [featureId, iterId] = parts;
+    activateTab(featureId);
+    setTimeout(() => {
+      const el = document.getElementById(`iter-${iterId}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+}
+
+// ──────────────────────────────────────────────────────
+//  INTERACTIONS
+// ──────────────────────────────────────────────────────
+
+function toggleStar(iterId, btn) {
+  const s = getIterState(iterId);
+  const newStarred = !s.starred;
+  setIterState(iterId, { starred: newStarred });
+  btn.classList.toggle("starred", newStarred);
+  btn.innerHTML = `${ICONS.star} ${newStarred ? "Bookmarked" : "Bookmark"}`;
+  showToast(newStarred ? "⭐ Bookmarked" : "Bookmark removed");
+}
+
+function toggleVote(iterId, btn) {
+  const s = getIterState(iterId);
+  const newVoted = !s.voted;
+  const newCount = Math.max(0, s.voteCount + (newVoted ? 1 : -1));
+  setIterState(iterId, { voted: newVoted, voteCount: newCount });
+  btn.classList.toggle("voted", newVoted);
+  const vc = document.getElementById(`vc-${iterId}`);
+  if (vc) vc.textContent = newCount;
+  showToast(newVoted ? "👍 Vote added" : "Vote removed");
+}
+
+/** Prototype card: replace click-to-load CTA with live iframe */
+function loadEmbed(btn, embedUrl) {
+  const wrapper = btn.closest(".embed-wrapper");
+  if (!wrapper) return;
+  const cta = btn.closest(".embed-cta");
+
+  // Swap CTA for a loading spinner while iframe initialises
+  cta.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>`;
+  cta.style.cursor = "default";
+
+  const iframe = document.createElement("iframe");
+  iframe.src = embedUrl;
+  iframe.allowFullscreen = true;
+  iframe.allow = "fullscreen";
+  iframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
+  iframe.title = "Figma prototype";
+  iframe.onload = () => cta.remove();
+  wrapper.appendChild(iframe);
+}
+
+/** Design spec embed: show iframe, hide CTA */
+function loadSpecEmbed(uid, embedUrl) {
+  const ctaWrap = document.getElementById(`cta-wrap-${uid}`);
+  const iframeArea = document.getElementById(`iframe-area-${uid}`);
+  const iframe = document.getElementById(`iframe-${uid}`);
+  if (!ctaWrap || !iframeArea || !iframe) return;
+
+  // Show spinner in CTA while loading
+  const btn = ctaWrap.querySelector(".load-btn");
+  if (btn) btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>&nbsp;Loading…`;
+
+  iframe.src = embedUrl;
+  iframe.onload = () => {
+    ctaWrap.style.display = "none";
+    iframeArea.classList.add("loaded");
+  };
+}
+
+function copyLink(featureId, iterId) {
+  const url = `${location.origin}${location.pathname}#${featureId}--${iterId}`;
+  navigator.clipboard.writeText(url)
+    .then(() => showToast("🔗 Link copied to clipboard"))
+    .catch(() => showToast("Copy failed — try manually"));
+}
+
+// ──────────────────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", buildUI);
+window.addEventListener("hashchange", handleHashNavigation);
+</script>
+</body>
+</html>
