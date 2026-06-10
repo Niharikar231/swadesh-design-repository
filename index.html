@@ -210,7 +210,7 @@
       color: var(--text-muted);
     }
 
-    .iteration-designer::before { content: "·"; margin-right: 12px; }
+    .iteration-designer::before { content: ""; margin-right: 0; }
 
     .tags {
       display: flex;
@@ -629,10 +629,10 @@
     }
 
     .iterations-section-title {
-      font-size: 1.375rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
     }
 
     .iterations-section-count {
@@ -652,7 +652,49 @@
     }
 
     .iter-card {
+      display: none;
+    }
+    .iter-card.visible {
       display: block;
+    }
+
+    .iter-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .iter-nav-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .iter-nav-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .iter-nav-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .iter-nav-pos {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      flex: 1;
+      text-align: center;
     }
 
     /* ─── Index Bar ──────────────────────────────────── */
@@ -993,7 +1035,31 @@ function renderScreensOrPrototypes(iter) {
 
 function renderIteration(iter, index, featureId) {
   const s = getIterState(iter.id);
-  const tagsHtml = (iter.tags || []).map(t => `<span class="tag">${t}</span>`).join("");
+
+  const annotationsHtml = iter.annotations && iter.annotations.length ? (() => {
+    const hasConfig = iter.annotations.some(a => a.configuration !== undefined);
+    const headerRow = hasConfig ? `
+      <div class="annotation-row annotation-header">
+        <div class="annotation-col-label">Section</div>
+        <div class="annotation-col-label">Description</div>
+        <div class="annotation-col-label">Configuration</div>
+      </div>` : `
+      <div class="annotation-row annotation-header" style="grid-template-columns:160px 1fr">
+        <div class="annotation-col-label">Section</div>
+        <div class="annotation-col-label">Description</div>
+      </div>`;
+    const rows = iter.annotations.map(a => hasConfig ? `
+      <div class="annotation-row">
+        <div class="annotation-section">${a.section}</div>
+        <div class="annotation-detail">${a.detail}</div>
+        <div class="annotation-config">${a.configuration || ""}</div>
+      </div>` : `
+      <div class="annotation-row" style="grid-template-columns:160px 1fr">
+        <div class="annotation-section">${a.section}</div>
+        <div class="annotation-detail" style="border-right:none">${a.detail}</div>
+      </div>`).join("");
+    return `<div class="annotations">${headerRow}${rows}</div>`;
+  })() : "";
 
   return `
     <div class="iteration-block" id="iter-${iter.id}">
@@ -1006,36 +1072,9 @@ function renderIteration(iter, index, featureId) {
           <div class="iteration-sub">
             ${iter.date && index !== 0 ? `<span class="iteration-date">${formatDate(iter.date)}</span>` : ""}
             ${iter.designer ? `<span class="iteration-designer">${iter.designer}</span>` : ""}
-            ${tagsHtml ? `<div class="tags">${tagsHtml}</div>` : ""}
           </div>
-          ${iter.notes ? `<p class="iteration-notes">${iter.notes}</p>` : ""}
-          ${iter.annotations && iter.annotations.length ? (() => {
-            const hasConfig = iter.annotations.some(a => a.configuration !== undefined);
-            const headerRow = hasConfig ? `
-              <div class="annotation-row annotation-header">
-                <div class="annotation-col-label">Section</div>
-                <div class="annotation-col-label">Description</div>
-                <div class="annotation-col-label">Configuration</div>
-              </div>` : `
-              <div class="annotation-row annotation-header" style="grid-template-columns:160px 1fr">
-                <div class="annotation-col-label">Section</div>
-                <div class="annotation-col-label">Description</div>
-              </div>`;
-            const rows = iter.annotations.map(a => hasConfig ? `
-              <div class="annotation-row">
-                <div class="annotation-section">${a.section}</div>
-                <div class="annotation-detail">${a.detail}</div>
-                <div class="annotation-config">${a.configuration || ""}</div>
-              </div>` : `
-              <div class="annotation-row" style="grid-template-columns:160px 1fr">
-                <div class="annotation-section">${a.section}</div>
-                <div class="annotation-detail" style="border-right:none">${a.detail}</div>
-              </div>`).join("");
-            return `<div class="annotations">${headerRow}${rows}</div>`;
-          })() : ""}
           ${iter.designFileUrl && iter.sectionEmbedUrl ? `
             <div class="handover-section">
-              <div class="handover-label">${iter.label || "Iteration"} · Figma handover file</div>
               <a class="design-file-link" href="${iter.designFileUrl}" target="_blank" rel="noopener">
                 ${ICONS.figma}&nbsp;Open design file
               </a>
@@ -1062,6 +1101,7 @@ function renderIteration(iter, index, featureId) {
 
       ${renderScreensOrPrototypes(iter)}
       ${renderSectionEmbed(iter)}
+      ${annotationsHtml}
     </div>`;
 }
 
@@ -1097,16 +1137,20 @@ function renderFeaturePanel(feature) {
     </button>`).join("");
 
   const iterCards = rest.map((iter, i) => `
-    <div class="iter-card" id="itercard-${feature.id}-${i}">
+    <div class="iter-card${i === 0 ? ' visible' : ''}" id="itercard-${feature.id}-${i}">
       ${renderIteration(iter, i + 1, feature.id)}
-      ${i < rest.length - 1 ? '<hr class="iteration-divider">' : ''}
+      <div class="iter-nav">
+        <button class="iter-nav-btn" onclick="showIteration('${feature.id}', ${i - 1})"${i === 0 ? ' disabled' : ''}>← Previous</button>
+        <span class="iter-nav-pos">${i + 1} of ${rest.length}</span>
+        <button class="iter-nav-btn" onclick="showIteration('${feature.id}', ${i + 1})"${i === rest.length - 1 ? ' disabled' : ''}>Next →</button>
+      </div>
     </div>`).join("");
 
   return `${introHtml}
     ${finalisedHtml}
     <div class="iterations-section">
       <div class="iterations-section-header">
-        <h2 class="iterations-section-title">Iterations</h2>
+        <h3 class="iterations-section-title">Iterations</h3>
         <span class="iterations-section-count">${rest.length} iteration${rest.length !== 1 ? 's' : ''}</span>
       </div>
       <div class="iterations-layout">
@@ -1122,28 +1166,16 @@ function renderFeaturePanel(feature) {
 }
 
 function showIteration(featureId, idx) {
-  const el = document.getElementById(`itercard-${featureId}-${idx}`);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function setupIterScrollspy(featureId, count) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const parts = entry.target.id.split('-');
-        const idx = parseInt(parts[parts.length - 1]);
-        if (isNaN(idx)) return;
-        for (let i = 0; i < count; i++) {
-          const btn = document.getElementById(`idx-${featureId}-${i}`);
-          if (btn) btn.className = 'index-item' + (i === idx ? ' active' : '');
-        }
-      }
-    });
-  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  const feature = (APP_DATA.features || []).find(f => f.id === featureId);
+  if (!feature) return;
+  const count = (feature.iterations || []).length - 1;
+  if (idx < 0 || idx >= count) return;
 
   for (let i = 0; i < count; i++) {
-    const el = document.getElementById(`itercard-${featureId}-${i}`);
-    if (el) observer.observe(el);
+    const card = document.getElementById(`itercard-${featureId}-${i}`);
+    const btn  = document.getElementById(`idx-${featureId}-${i}`);
+    if (card) card.className = 'iter-card' + (i === idx ? ' visible' : '');
+    if (btn)  btn.className  = 'index-item'  + (i === idx ? ' active'  : '');
   }
 }
 
@@ -1190,12 +1222,6 @@ function buildUI() {
     panel.setAttribute("role", "tabpanel");
     panel.innerHTML = renderFeaturePanel(feature);
     main.appendChild(panel);
-
-    // Set up scroll spy for indexed iterations
-    const iterCount = (feature.iterations || []).length - 1;
-    if (iterCount > 0) {
-      setTimeout(() => setupIterScrollspy(feature.id, iterCount), 200);
-    }
   });
 
   // Handle deep-link hash on load
