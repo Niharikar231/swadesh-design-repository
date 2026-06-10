@@ -34,6 +34,10 @@ const APP_DATA = {
     {
       id: "search",
       name: "Search",
+      intro: {
+        requirement: "Design the zero state for search — the screen users land on when they open search before typing anything.",
+        rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue."
+      },
       iterations: [
 
         // ── Finalised iteration ──────────────
@@ -347,6 +351,10 @@ const APP_DATA = {
       name: "MOP",
       emptyStateTitle: "Documentation in progress",
       emptyStateMessage: "Design documentation for MOP is being prepared and will be available here shortly.",
+      intro: {
+        requirement: "Design the mode of payment selection screen.",
+        rationale: "Documentation in progress."
+      },
       iterations: []
     },
 
@@ -356,6 +364,10 @@ const APP_DATA = {
       name: "Whatsapp floater",
       emptyStateTitle: "Documentation in progress",
       emptyStateMessage: "Design documentation for the WhatsApp floater is being prepared and will be available here shortly.",
+      intro: {
+        requirement: "Design the WhatsApp floating button placement and behaviour.",
+        rationale: "Documentation in progress."
+      },
       iterations: []
     }
 
