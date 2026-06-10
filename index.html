@@ -44,66 +44,87 @@
       min-height: 100vh;
     }
 
-    /* ─── Header ───────────────────────────────────── */
-    .site-header {
+    /* ─── Page Hero ─────────────────────────────────── */
+    .page-hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 40px 40px;
+    }
+
+    .page-hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+
+    .hero-description {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      max-width: 680px;
+      margin-bottom: 16px;
+    }
+
+    .last-updated {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    /* ─── Features Nav ───────────────────────────────── */
+    .features-nav {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       padding: 0 40px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 99;
     }
 
-    .header-inner {
+    .features-nav-inner {
       max-width: 1400px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      height: 64px;
+      gap: 20px;
+      padding: 10px 0;
     }
 
-    .site-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-    }
-
-    .last-updated {
-      font-size: 0.8125rem;
+    .features-nav-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-muted);
-    }
-
-    /* ─── Tab Bar ──────────────────────────────────── */
-    .tab-bar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      position: sticky;
-      top: 64px;
-      z-index: 99;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .tab-list {
-      max-width: 1400px;
-      margin: 0 auto;
       display: flex;
-      gap: 8px;
-      padding: 12px 0;
+      gap: 6px;
       list-style: none;
       overflow-x: auto;
       scrollbar-width: none;
+      padding: 2px 0;
     }
     .tab-list::-webkit-scrollbar { display: none; }
 
     .tab-btn {
-      padding: 7px 18px;
+      padding: 6px 16px;
       border-radius: var(--radius-pill);
       border: 1.5px solid var(--border);
       background: transparent;
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
@@ -120,13 +141,14 @@
       background: var(--tab-active-bg);
       border-color: var(--tab-active-bg);
       color: var(--tab-active-text);
+      font-weight: 600;
     }
 
     /* ─── Main Content ─────────────────────────────── */
     .main {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 36px 40px 80px;
+      padding: 40px 40px 80px;
     }
 
     /* ─── Feature Panel ────────────────────────────── */
@@ -211,6 +233,26 @@
       color: var(--text-secondary);
       line-height: 1.6;
       max-width: 760px;
+    }
+
+    /* ─── Feature Intro ──────────────────────────────── */
+    .feature-intro {
+      margin-bottom: 40px;
+      max-width: 680px;
+    }
+
+    .feature-intro-req {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .feature-intro-rationale {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
     }
 
     /* ─── Action Buttons (header row) ─────────────── */
@@ -574,86 +616,100 @@
       position: relative;
     }
 
-    /* ─── Iterations collapse ──────────────────────── */
-    .iterations-collapse {
-      margin-top: 48px;
+    /* ─── Indexed Iterations Section ────────────────── */
+    .iterations-section {
+      margin-top: 56px;
     }
 
-    .iterations-toggle {
-      width: 100%;
+    .iterations-section-header {
       display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .iterations-section-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .iterations-section-count {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .iterations-layout {
+      display: grid;
+      grid-template-columns: 1fr 52px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .iterations-content {
+      min-width: 0;
+    }
+
+    .iter-card {
+      display: block;
+    }
+
+    /* ─── Index Bar ──────────────────────────────────── */
+    .iterations-index {
+      position: sticky;
+      top: 72px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      background: var(--surface);
+      gap: 0;
+    }
+
+    .index-count {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      width: 32px;
+      text-align: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 0;
+    }
+
+    .index-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .index-item {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
       border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
       cursor: pointer;
       font-family: inherit;
-      text-align: left;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .iterations-toggle:hover {
-      border-color: #C4B5E8;
-      box-shadow: var(--shadow-md);
-    }
-
-    .iterations-toggle-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .iterations-toggle-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: var(--tag-bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      color: var(--text-secondary);
+      transition: all 0.15s;
     }
 
-    .iterations-toggle-label {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
+    .index-item:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    .iterations-toggle-count {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      margin-top: 1px;
-      font-weight: 400;
-    }
-
-    .iterations-toggle-chevron {
-      color: var(--text-muted);
-      transition: transform 0.25s ease;
-      flex-shrink: 0;
-    }
-
-    .iterations-toggle.open .iterations-toggle-chevron {
-      transform: rotate(180deg);
-    }
-
-    .iterations-body {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.4s ease;
-    }
-
-    .iterations-body.open {
-      max-height: 99999px; /* large enough for any content */
-    }
-
-    .iterations-body-inner {
-      padding-top: 32px;
+    .index-item.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     /* ─── Divider ──────────────────────────────────── */
@@ -705,17 +761,21 @@
 </head>
 <body>
 
-<!-- ─── Header ──────────────────────────────────────── -->
-<header class="site-header">
-  <div class="header-inner">
-    <span class="site-title" id="site-title">Design Repository</span>
+<!-- ─── Page Hero ───────────────────────────────────── -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1 class="hero-title" id="site-title">Swadesh Design Repository</h1>
+    <p class="hero-description">A living reference for ongoing and completed design work across prioritised features. One place for all stakeholders to review specifications, screens, and prototypes — and a complete record of every iteration that shaped the final solution.</p>
     <span class="last-updated" id="last-updated"></span>
   </div>
-</header>
+</div>
 
-<!-- ─── Tab Bar ─────────────────────────────────────── -->
-<nav class="tab-bar" aria-label="Features">
-  <ul class="tab-list" id="tab-list" role="tablist"></ul>
+<!-- ─── Features Nav ─────────────────────────────────── -->
+<nav class="features-nav" aria-label="Features">
+  <div class="features-nav-inner">
+    <span class="features-nav-label">Features</span>
+    <ul class="tab-list" id="tab-list" role="tablist"></ul>
+  </div>
 </nav>
 
 <!-- ─── Main Content ────────────────────────────────── -->
@@ -1007,9 +1067,16 @@ function renderIteration(iter, index, featureId) {
 
 function renderFeaturePanel(feature) {
   const iters = feature.iterations || [];
+
+  const introHtml = feature.intro ? `
+    <div class="feature-intro">
+      <p class="feature-intro-req">${feature.intro.requirement}</p>
+      <p class="feature-intro-rationale">${feature.intro.rationale}</p>
+    </div>` : "";
+
   if (iters.length === 0) {
     const msg = feature.emptyStateMessage || "Add iterations in data.js to get started.";
-    return `<div class="empty-state">
+    return `${introHtml}<div class="empty-state">
       ${ICONS.placeholder}
       <h3>${feature.emptyStateTitle || "No iterations yet"}</h3>
       <p>${msg}</p>
@@ -1017,53 +1084,67 @@ function renderFeaturePanel(feature) {
   }
 
   const [first, ...rest] = iters;
-  const collapseId = `collapse-${feature.id}`;
-
-  // Finalised iteration always shown at top
   const finalisedHtml = renderIteration(first, 0, feature.id);
 
-  if (rest.length === 0) return finalisedHtml;
+  if (rest.length === 0) return `${introHtml}${finalisedHtml}`;
 
-  // Build the collapsible body (remaining iterations)
-  const restHtml = rest.map((iter, i) =>
-    renderIteration(iter, i + 1, feature.id) +
-    (i < rest.length - 1 ? `<hr class="iteration-divider">` : "")
-  ).join("\n");
+  const indexItems = rest.map((iter, i) => `
+    <button class="index-item${i === 0 ? ' active' : ''}"
+      onclick="showIteration('${feature.id}', ${i})"
+      id="idx-${feature.id}-${i}"
+      title="${(iter.label || `Iteration ${i + 2}`).replace(/"/g, '&quot;')}">
+      <span class="index-num">${i + 2}</span>
+    </button>`).join("");
 
-  const chevronIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
-  const stackIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
+  const iterCards = rest.map((iter, i) => `
+    <div class="iter-card" id="itercard-${feature.id}-${i}">
+      ${renderIteration(iter, i + 1, feature.id)}
+      ${i < rest.length - 1 ? '<hr class="iteration-divider">' : ''}
+    </div>`).join("");
 
-  return `
+  return `${introHtml}
     ${finalisedHtml}
-    <div class="iterations-collapse" id="${collapseId}-wrap">
-      <button class="iterations-toggle" id="${collapseId}-btn" onclick="toggleIterations('${collapseId}')" aria-expanded="false">
-        <div class="iterations-toggle-left">
-          <div class="iterations-toggle-icon">${stackIcon}</div>
-          <div>
-            <div class="iterations-toggle-label">Show iterations</div>
-            <div class="iterations-toggle-count">${rest.length} iteration${rest.length !== 1 ? "s" : ""}</div>
-          </div>
+    <div class="iterations-section">
+      <div class="iterations-section-header">
+        <h2 class="iterations-section-title">Iterations</h2>
+        <span class="iterations-section-count">${rest.length} iteration${rest.length !== 1 ? 's' : ''}</span>
+      </div>
+      <div class="iterations-layout">
+        <div class="iterations-content" id="iters-${feature.id}">
+          ${iterCards}
         </div>
-        <div class="iterations-toggle-chevron">${chevronIcon}</div>
-      </button>
-      <div class="iterations-body" id="${collapseId}-body">
-        <div class="iterations-body-inner">
-          ${restHtml}
+        <div class="iterations-index" id="index-${feature.id}">
+          <div class="index-count">${rest.length}</div>
+          <div class="index-items">${indexItems}</div>
         </div>
       </div>
     </div>`;
 }
 
-function toggleIterations(collapseId) {
-  const btn  = document.getElementById(`${collapseId}-btn`);
-  const body = document.getElementById(`${collapseId}-body`);
-  const isOpen = body.classList.contains("open");
-  body.classList.toggle("open", !isOpen);
-  btn.classList.toggle("open", !isOpen);
-  btn.setAttribute("aria-expanded", String(!isOpen));
-  // Update label
-  const label = btn.querySelector(".iterations-toggle-label");
-  label.textContent = isOpen ? "Show iterations" : "Hide iterations";
+function showIteration(featureId, idx) {
+  const el = document.getElementById(`itercard-${featureId}-${idx}`);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function setupIterScrollspy(featureId, count) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const parts = entry.target.id.split('-');
+        const idx = parseInt(parts[parts.length - 1]);
+        if (isNaN(idx)) return;
+        for (let i = 0; i < count; i++) {
+          const btn = document.getElementById(`idx-${featureId}-${i}`);
+          if (btn) btn.className = 'index-item' + (i === idx ? ' active' : '');
+        }
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  for (let i = 0; i < count; i++) {
+    const el = document.getElementById(`itercard-${featureId}-${i}`);
+    if (el) observer.observe(el);
+  }
 }
 
 function buildUI() {
@@ -1109,6 +1190,12 @@ function buildUI() {
     panel.setAttribute("role", "tabpanel");
     panel.innerHTML = renderFeaturePanel(feature);
     main.appendChild(panel);
+
+    // Set up scroll spy for indexed iterations
+    const iterCount = (feature.iterations || []).length - 1;
+    if (iterCount > 0) {
+      setTimeout(() => setupIterScrollspy(feature.id, iterCount), 200);
+    }
   });
 
   // Handle deep-link hash on load
