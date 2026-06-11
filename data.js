@@ -166,7 +166,7 @@ const APP_DATA = {
             }
           ],
           designFileUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
-          sectionEmbedUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
+          sectionEmbedUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3138-13308&t=v2wR0aggjHfv4iiL-4",
           tags: ["v1", "zero-state"],
           mobile: {
             figmaUrl: "https://www.figma.com/proto/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3124-10711&viewport=8088%2C-4662%2C0.62&t=v2wR0aggjHfv4iiL-0&scaling=contain&content-scaling=fixed&starting-point-node-id=3124%3A10711&show-proto-sidebar=1",
