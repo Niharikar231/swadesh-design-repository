@@ -736,6 +736,91 @@
     .task-row[data-feature] { cursor: pointer; transition: background 0.12s; }
     .task-row[data-feature]:hover { background: var(--accent-light); }
 
+    /* ─── Sandbox Section ───────────────────────────── */
+    .sandbox-section {
+      margin-top: 56px;
+    }
+
+    .sandbox-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .sandbox-tab-btn {
+      padding: 8px 18px;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .sandbox-tab-btn:hover { color: var(--text-primary); }
+    .sandbox-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+    .sandbox-panel { display: none; }
+    .sandbox-panel.active { display: block; }
+
+    /* ─── References Grid ────────────────────────────── */
+    .references-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .ref-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+
+    .ref-img-wrap {
+      width: 100%;
+      background: #F5F5F5;
+      overflow: hidden;
+      max-height: 260px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .ref-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .ref-card-body { padding: 14px 16px 16px; }
+
+    .ref-source {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .ref-caption {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .ref-notes {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     /* ─── Indexed Iterations Section ────────────────── */
     .iterations-section {
       margin-top: 56px;
@@ -1242,6 +1327,37 @@ function renderHomeDashboard(tasks) {
   </div>`;
 }
 
+function renderReferences(refs) {
+  if (!refs || refs.length === 0) {
+    return `<div class="empty-state">
+      ${ICONS.placeholder}
+      <h3>No references yet</h3>
+      <p>Add reference screenshots to the references array in data.js.</p>
+    </div>`;
+  }
+  const cards = refs.map(r => `
+    <div class="ref-card">
+      <div class="ref-img-wrap">
+        <img src="${r.screenshotUrl}" alt="${r.source}" loading="lazy" />
+      </div>
+      <div class="ref-card-body">
+        <div class="ref-source">${r.source}</div>
+        <div class="ref-caption">${r.caption || ""}</div>
+        ${r.notes ? `<p class="ref-notes">${r.notes}</p>` : ""}
+      </div>
+    </div>`).join("");
+  return `<div class="references-grid">${cards}</div>`;
+}
+
+function activateSandboxTab(featureId, tab) {
+  ['iterations', 'references'].forEach(t => {
+    const panel = document.getElementById(`sandbox-${t}-${featureId}`);
+    const btn   = document.getElementById(`sandboxtab-${t}-${featureId}`);
+    if (panel) panel.classList.toggle('active', t === tab);
+    if (btn)   btn.classList.toggle('active', t === tab);
+  });
+}
+
 function renderFeaturePanel(feature) {
   const iters = feature.iterations || [];
 
@@ -1295,12 +1411,12 @@ function renderFeaturePanel(feature) {
       ${i < rest.length - 1 ? '<hr class="iteration-divider">' : ''}
     </div>`).join("");
 
-  return `${introHtml}
-    ${finalisedHtml}
+  const hasRefs = feature.references && feature.references.length > 0;
+
+  const iterationsPanel = `
     <div class="iterations-section">
       <div class="iterations-section-header">
         <div class="iterations-section-title-row">
-          <h3 class="iterations-section-title">Iterations</h3>
           <span class="iterations-section-count">${rest.length} iteration${rest.length !== 1 ? 's' : ''}</span>
         </div>
         ${feature.iterationsDescription ? `<p class="iterations-section-desc">${feature.iterationsDescription}</p>` : ""}
@@ -1312,6 +1428,23 @@ function renderFeaturePanel(feature) {
         <div class="iterations-index" id="index-${feature.id}">
           <div class="index-items">${indexItems}</div>
         </div>
+      </div>
+    </div>`;
+
+  return `${introHtml}
+    ${finalisedHtml}
+    <div class="sandbox-section">
+      <div class="sandbox-tabs-bar">
+        <button class="sandbox-tab-btn active" id="sandboxtab-iterations-${feature.id}"
+          onclick="activateSandboxTab('${feature.id}', 'iterations')">Design Iterations</button>
+        <button class="sandbox-tab-btn${hasRefs ? '' : ''}" id="sandboxtab-references-${feature.id}"
+          onclick="activateSandboxTab('${feature.id}', 'references')">References${hasRefs ? ` <span style="font-size:0.7rem;font-weight:600;background:var(--accent-light);color:var(--accent);padding:1px 6px;border-radius:999px;margin-left:4px;">${feature.references.length}</span>` : ''}</button>
+      </div>
+      <div class="sandbox-panel active" id="sandbox-iterations-${feature.id}">
+        ${iterationsPanel}
+      </div>
+      <div class="sandbox-panel" id="sandbox-references-${feature.id}">
+        ${renderReferences(feature.references)}
       </div>
     </div>`;
 }
