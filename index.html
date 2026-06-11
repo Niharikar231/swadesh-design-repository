@@ -79,15 +79,52 @@
       display: block;
     }
 
-    /* ─── Features Nav ───────────────────────────────── */
-    .features-nav {
+    /* ─── Top Nav (Home | Features) ─────────────────── */
+    .top-nav {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       padding: 0 40px;
       position: sticky;
       top: 0;
-      z-index: 99;
+      z-index: 100;
     }
+
+    .top-nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 44px;
+    }
+
+    .top-nav-btn {
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .top-nav-btn:hover { color: var(--text-primary); background: var(--accent-light); }
+    .top-nav-btn.active { background: var(--tab-active-bg); color: var(--tab-active-text); font-weight: 600; }
+
+    /* ─── Features Sub-Nav ───────────────────────────── */
+    .features-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky;
+      top: 44px;
+      z-index: 99;
+      display: none;
+    }
+    .features-nav.visible { display: block; }
 
     .features-nav-inner {
       max-width: 1400px;
@@ -98,15 +135,7 @@
       padding: 10px 0;
     }
 
-    .features-nav-label {
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .features-nav-label { display: none; }
 
     .tab-list {
       display: flex;
@@ -616,6 +645,84 @@
       position: relative;
     }
 
+    /* ─── Home Dashboard ────────────────────────────── */
+    .home-panel { max-width: 800px; }
+
+    .tasks-section-title {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .task-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .task-row:last-child { border-bottom: none; }
+
+    .task-row-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+    .task-type-badge {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+    }
+    .task-type-badge.prd   { background: var(--accent-light); color: var(--tab-active-text); }
+    .task-type-badge.adhoc { background: #FFF3E0; color: #B45309; }
+
+    .task-name {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .task-row.status-rejected .task-name {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 11px;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .status-pill.in-progress      { background: #EEF2FF; color: #4338CA; }
+    .status-pill.shared-for-review { background: #FFF7ED; color: #C2410C; }
+    .status-pill.yet-to-start     { background: #F4F4F5; color: #71717A; }
+    .status-pill.blocked          { background: #FEF2F2; color: #DC2626; }
+    .status-pill.rejected         { background: #F4F4F5; color: #A1A1AA; }
+    .status-pill.completed        { background: #F0FDF4; color: #16A34A; }
+
+    .task-row[data-feature] { cursor: pointer; transition: background 0.12s; }
+    .task-row[data-feature]:hover { background: var(--accent-light); }
+
     /* ─── Indexed Iterations Section ────────────────── */
     .iterations-section {
       margin-top: 56px;
@@ -694,7 +801,7 @@
     /* ─── Index Bar ──────────────────────────────────── */
     .iterations-index {
       position: sticky;
-      top: 72px;
+      top: 104px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -806,10 +913,17 @@
   </div>
 </div>
 
-<!-- ─── Features Nav ─────────────────────────────────── -->
-<nav class="features-nav" aria-label="Features">
+<!-- ─── Top Nav ──────────────────────────────────────── -->
+<nav class="top-nav" aria-label="Main navigation">
+  <div class="top-nav-inner">
+    <button class="top-nav-btn active" id="top-btn-home" onclick="activateView('home')">Home</button>
+    <button class="top-nav-btn" id="top-btn-features" onclick="activateView('features')">Features</button>
+  </div>
+</nav>
+
+<!-- ─── Features Sub-Nav ─────────────────────────────── -->
+<nav class="features-nav" id="features-nav" aria-label="Features">
   <div class="features-nav-inner">
-    <span class="features-nav-label">Features</span>
     <ul class="tab-list" id="tab-list" role="tablist"></ul>
   </div>
 </nav>
@@ -1081,6 +1195,28 @@ function renderIteration(iter, index, featureId) {
     </div>`;
 }
 
+const STATUS_LABELS = {
+  "in-progress":       "In progress",
+  "shared-for-review": "Shared for review",
+  "yet-to-start":      "Yet to start",
+  "blocked":           "Blocked",
+  "rejected":          "Rejected",
+  "completed":         "Completed"
+};
+
+function renderHomeDashboard(tasks) {
+  const rows = (tasks || []).map(t => `
+    <div class="task-row status-${t.status}"${t.featureId ? ` data-feature="${t.featureId}" onclick="activateTab('${t.featureId}')"` : ''}>
+      <span class="task-name">${t.name}</span>
+      <span class="status-pill ${t.status}">${STATUS_LABELS[t.status] || t.status}</span>
+    </div>`).join("");
+
+  return `<div class="home-panel">
+    <p class="tasks-section-title">Ongoing work</p>
+    <div class="task-list">${rows}</div>
+  </div>`;
+}
+
 function renderFeaturePanel(feature) {
   const iters = feature.iterations || [];
 
@@ -1182,12 +1318,20 @@ function buildUI() {
   const tabList = document.getElementById("tab-list");
   const main = document.getElementById("main");
 
+  // ── Home panel (top-level, not in tab-list) ────────
+  const homePanel = document.createElement("section");
+  homePanel.id = "panel-home";
+  homePanel.className = "feature-panel active";
+  homePanel.setAttribute("role", "tabpanel");
+  homePanel.innerHTML = renderHomeDashboard(data.tasks || []);
+  main.appendChild(homePanel);
+
   (data.features || []).forEach((feature, idx) => {
     // Tab button
     const li = document.createElement("li");
     li.setAttribute("role", "presentation");
     const btn = document.createElement("button");
-    btn.className = "tab-btn" + (idx === 0 ? " active" : "");
+    btn.className = "tab-btn";
     btn.setAttribute("role", "tab");
     btn.setAttribute("aria-controls", `panel-${feature.id}`);
     btn.setAttribute("aria-selected", idx === 0 ? "true" : "false");
@@ -1200,7 +1344,7 @@ function buildUI() {
     // Panel
     const panel = document.createElement("section");
     panel.id = `panel-${feature.id}`;
-    panel.className = "feature-panel" + (idx === 0 ? " active" : "");
+    panel.className = "feature-panel";
     panel.setAttribute("role", "tabpanel");
     panel.innerHTML = renderFeaturePanel(feature);
     main.appendChild(panel);
@@ -1214,7 +1358,35 @@ function buildUI() {
   handleHashNavigation();
 }
 
+let lastActiveFeature = null;
+
+function activateView(view) {
+  const isHome = view === 'home';
+  document.getElementById('top-btn-home').classList.toggle('active', isHome);
+  document.getElementById('top-btn-features').classList.toggle('active', !isHome);
+  document.getElementById('features-nav').classList.toggle('visible', !isHome);
+
+  if (isHome) {
+    document.querySelectorAll('.feature-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-home'));
+    history.replaceState(null, '', '#home');
+  } else {
+    // Show last active feature, or first one
+    const target = lastActiveFeature || (APP_DATA.features && APP_DATA.features[0] && APP_DATA.features[0].id);
+    if (target) activateTab(target);
+  }
+}
+
 function activateTab(featureId) {
+  // Switch to features view if not already there
+  const featuresNav = document.getElementById('features-nav');
+  if (!featuresNav.classList.contains('visible')) {
+    document.getElementById('top-btn-home').classList.remove('active');
+    document.getElementById('top-btn-features').classList.add('active');
+    featuresNav.classList.add('visible');
+  }
+
+  lastActiveFeature = featureId;
+
   document.querySelectorAll(".tab-btn").forEach(btn => {
     const isActive = btn.dataset.featureId === featureId;
     btn.classList.toggle("active", isActive);
@@ -1223,7 +1395,6 @@ function activateTab(featureId) {
   document.querySelectorAll(".feature-panel").forEach(panel => {
     panel.classList.toggle("active", panel.id === `panel-${featureId}`);
   });
-  // Update URL hash (no navigation)
   history.replaceState(null, "", `#${featureId}`);
 }
 
