@@ -25,6 +25,21 @@ const APP_DATA = {
   title: "Swadesh design repository",
 
   // ─────────────────────────────────────────────
+  //  TASKS
+  //  Shown on the Home dashboard.
+  //  status: "in-progress" | "under-review" | "yet-to-start" | "blocked" | "rejected" | "completed"
+  //  type: "prd" | "adhoc"
+  // ─────────────────────────────────────────────
+  tasks: [
+    { id: "search-zero-state",  name: "Search — Zero state",                  status: "shared-for-review", featureId: "search"          },
+    { id: "cash-collection",    name: "Cash collection",                       status: "in-progress",       featureId: "cash-collection" },
+    { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
+    { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
+    { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
+    { id: "tcs",                name: "Tax collection at source",             status: "yet-to-start",      featureId: "tcs"             },
+  ],
+
+  // ─────────────────────────────────────────────
   //  FEATURES
   //  Each feature becomes a tab in the navigation.
   // ─────────────────────────────────────────────
@@ -346,6 +361,56 @@ const APP_DATA = {
     },
 
     // ── Feature 2 ──────────────────────────────
+    {
+      id: "cash-collection",
+      name: "Cash collection",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Cash collection is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the cash collection flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 3 ──────────────────────────────
+    {
+      id: "corporate-po",
+      name: "Corporate Purchase Order",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Corporate Purchase Order is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the corporate purchase order flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 4 ──────────────────────────────
+    {
+      id: "ops-pay-link",
+      name: "Ops Assisted pay-link",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Ops Assisted pay-link is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the ops-assisted pay-link flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 5 ──────────────────────────────
+    {
+      id: "partial-payment",
+      name: "Partial Payment for Bespoke orders",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Partial Payment for Bespoke orders is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the partial payment flow for bespoke orders.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 6 ──────────────────────────────
+    {
+      id: "tcs",
+      name: "Tax collection at source",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Tax collection at source is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the tax collection at source flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 7 ──────────────────────────────
     {
       id: "mop",
       name: "MOP",
