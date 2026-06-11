@@ -54,6 +54,66 @@ const APP_DATA = {
         rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue."
       },
       iterationsDescription: "A full record of every direction explored before the design was locked — from early wireframes testing layout and hierarchy to high-fidelity compositions evaluating editorial themes, card formats, chip patterns, and column structures. Each entry notes what was tried, what held up, and what was left behind.",
+
+      references: [
+        {
+          id: "ref-gucci",
+          source: "Gucci",
+          caption: "Search zero state — desktop",
+          screenshotUrl: "ref-gucci.png",
+          notes: "Two-column layout: contextual nav (New In, Suggestions) on the left; 'Most Coveted' product grid on the right. Search bar anchored at top with trending terms as underlined text links. Product-first approach — no editorial imagery at zero state."
+        },
+        {
+          id: "ref-lv-desktop",
+          source: "Louis Vuitton",
+          caption: "Search zero state — desktop",
+          screenshotUrl: "ref-lv-desktop.png",
+          notes: "Full-width search bar with rounded pill style, prominently centred. Trending searches shown as plain text chips below. Below the fold: curated product rows labelled by collection (LV Resort, New Men's Pre-Fall). Heavy product density with no editorial framing at zero state."
+        },
+        {
+          id: "ref-goodearth",
+          source: "Good Earth",
+          caption: "Search zero state — desktop",
+          screenshotUrl: "ref-goodearth.png",
+          notes: "Closest benchmark to the Swadesh approach. 'Popular Searches' as pill chips, 'You Might Like' product grid below. Clean, minimal layout. Search field with 'View All Results' CTA inline. Products shown with real photography in a 5-col grid."
+        },
+        {
+          id: "ref-cartier-desktop",
+          source: "Cartier",
+          caption: "Search zero state — desktop",
+          screenshotUrl: "ref-cartier-desktop.png",
+          notes: "Three-column zero state: 'Be Inspired' editorial cards (left), 'Articles' text links (centre), 'Customer Care' utility links (right). No product grid at zero state — purely editorial and utility. Direct inspiration for the 'Be Inspired' section naming and editorial card approach in Swadesh."
+        },
+        {
+          id: "ref-nicobar-mobile",
+          source: "Nicobar",
+          caption: "Search zero state — mobile",
+          screenshotUrl: "ref-nicobar-mobile.png",
+          notes: "Trending searches as square pill tags with 🔥 icon. 'Popular Categories' full-bleed editorial images below (New Arrivals, Womenswear). Bold, image-led category entry points. No product grid — discovery through categories and trends only."
+        },
+        {
+          id: "ref-lv-mobile",
+          source: "Louis Vuitton",
+          caption: "Search zero state — mobile",
+          screenshotUrl: "ref-lv-mobile.png",
+          notes: "Trending searches as plain spaced text links. Below: collection-labelled product rows in a 2-col grid. Same architecture as the desktop — search bar prominent, products below. No editorial cards or curated suggestions."
+        },
+        {
+          id: "ref-cartier-mobile",
+          source: "Cartier",
+          caption: "Search zero state — mobile (lower half)",
+          screenshotUrl: "ref-cartier-mobile.png",
+          notes: "Lower portion of Cartier mobile zero state showing Articles (text list) and Customer Care (icon + label rows). Utility-forward approach. The mobile layout collapses the three desktop columns into a stacked single-column scroll."
+        },
+        {
+          id: "ref-buccellati",
+          source: "Buccellati",
+          caption: "Search zero state — desktop",
+          screenshotUrl: "ref-buccellati.png",
+          notes: "Three-column layout: Icona Collections + Categories nav (left), product grid 'Our Creations' (centre), editorial image cards 'You Might Be Interested In' (right). Rich multi-section zero state. 'You Might Be Interested In' label directly referenced in Swadesh suggestion link naming."
+        }
+      ],
+
       iterations: [
 
         // ── Finalised iteration ──────────────
