@@ -1227,10 +1227,26 @@ function renderFeaturePanel(feature) {
     </div>` : "";
 
   if (iters.length === 0) {
-    const msg = feature.emptyStateMessage || "Add iterations in data.js to get started.";
+    const task = (APP_DATA.tasks || []).find(t => t.featureId === feature.id);
+    const status = task && task.status;
+
+    let title, msg;
+    if (status === 'in-progress') {
+      title = "Work in progress";
+      msg   = "Designs for this feature are actively being worked on. Screens and documentation will appear here as the work progresses.";
+    } else if (status === 'yet-to-start') {
+      title = "Yet to start";
+      msg   = "Design work for this feature is queued and hasn't kicked off yet. Check back once the brief is picked up.";
+    } else {
+      title = feature.emptyStateTitle || "No iterations yet";
+      msg   = feature.emptyStateMessage || "Add iterations in data.js to get started.";
+    }
+
+    const statusPill = status ? `<span class="status-pill ${status}" style="display:inline-block;margin-bottom:16px;">${STATUS_LABELS[status] || status}</span>` : "";
+
     return `${introHtml}<div class="empty-state">
-      ${ICONS.placeholder}
-      <h3>${feature.emptyStateTitle || "No iterations yet"}</h3>
+      ${statusPill}
+      <h3>${title}</h3>
       <p>${msg}</p>
     </div>`;
   }
