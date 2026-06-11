@@ -189,6 +189,19 @@
       margin-bottom: 56px;
     }
 
+    .iter-description {
+      margin-top: 12px;
+      margin-bottom: 24px;
+      max-width: 720px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding: 14px 16px;
+      background: #F8F7FC;
+      border-left: 3px solid var(--border);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
     .iteration-header {
       display: flex;
       align-items: flex-start;
@@ -1189,6 +1202,7 @@ function renderIteration(iter, index, featureId) {
         </div>
       </div>
 
+      ${iter.notes ? `<p class="iter-description">${iter.notes}</p>` : ""}
       ${renderScreensOrPrototypes(iter)}
       ${renderSectionEmbed(iter)}
       ${annotationsHtml}
