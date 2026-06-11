@@ -53,6 +53,7 @@ const APP_DATA = {
         requirement: "Design the zero state for search — the screen users land on when they open search before typing anything.",
         rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue."
       },
+      iterationsDescription: "A full record of every direction explored before the design was locked — from early wireframes testing layout and hierarchy to high-fidelity compositions evaluating editorial themes, card formats, chip patterns, and column structures. Each entry notes what was tried, what held up, and what was left behind.",
       iterations: [
 
         // ── Finalised iteration ──────────────
