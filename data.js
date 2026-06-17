@@ -137,22 +137,22 @@ const APP_DATA = {
             {
               section: "You might be interested in",
               detail: "Curated suggestion list rendered as plain text links. Sample: Mysore Rosewood Inlay, Banarasi Silk Sarees, Bronze Statues, Chikankari Kurti.",
-              configuration: "CMS-driven. All links configurable."
+              configuration: "CMS-driven. All links configurable. An AI recommendation engine can be plugged in to dynamically surface products."
             },
             {
               section: "Be inspired (editorial cards)",
               detail: "Full-bleed image cards with title overlay and gradient. Two cards side by side — e.g. Jewellery, Silk Selection. Section label and theme tag shown above.",
-              configuration: "Set of 2 cards — each card has configurable image, title, and URL. Section title has 2 configurable fields separated by a dot (e.g. 'Be Inspired • Festive'). Fixed constraints: cards per section — 2; section title word limits — 15 & 24 chars; max sections — 2 (4 cards total); card title char count — 24 chars."
+              configuration: "Set of 2 cards — each card has configurable image, title, and URL. Section title has 2 configurable fields separated by a dot (e.g. 'Be Inspired • Festive'). Fixed constraints: cards per section — 2; section title word limits — 15 & 24 chars; max sections — 2 (4 cards total); card title char count — 24 chars. An AI recommendation engine can be plugged in to dynamically surface collections."
             },
             {
               section: "Crafts • Weaves & Prints (mobile only)",
               detail: "Additional editorial card section below Be Inspired, using the same card component. Cards: Banarasi Weaves, Bandhni Tye Dye. Not present in the desktop layout.",
-              configuration: "Same component and configuration rules as the Be Inspired editorial section above."
+              configuration: "Same component and configuration rules as the Be Inspired editorial section above. An AI recommendation engine can be plugged in to dynamically surface collections."
             },
             {
               section: "Discover latest",
               detail: "Desktop: 2-column product grid. Mobile: single-column list. Each item shows thumbnail, product name, and price.",
-              configuration: "Configurable product list. Min — 4 items, Max — 8 items."
+              configuration: "Configurable product list. Min — 4 items, Max — 8 items. An AI recommendation engine can be plugged in to dynamically surface products."
             },
             {
               section: "Customer care",
