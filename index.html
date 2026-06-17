@@ -458,6 +458,64 @@
       line-height: 1.55;
     }
 
+    /* ─── Design Decisions ───────────────────────────── */
+    .design-decisions {
+      margin-top: 16px;
+      margin-bottom: 16px;
+      max-width: 960px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .dd-section-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 7px 14px;
+      background: #F5F3F9;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dd-item {
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dd-item:last-child { border-bottom: none; }
+
+    .dd-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .dd-row {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    .dd-row:last-child { margin-bottom: 0; }
+
+    .dd-label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-top: 2px;
+    }
+
+    .dd-text {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
     /* ─── Handover file section ────────────────────── */
     .handover-section {
       margin-top: 16px;
@@ -1251,6 +1309,17 @@ function renderScreensOrPrototypes(iter) {
 function renderIteration(iter, index, featureId) {
   const s = getIterState(iter.id);
 
+  const designDecisionsHtml = iter.designDecisions && iter.designDecisions.length ? (() => {
+    const items = iter.designDecisions.map(d => `
+      <div class="dd-item">
+        <div class="dd-title">${d.title}</div>
+        <div class="dd-row"><span class="dd-label">Problem</span><span class="dd-text">${d.problem}</span></div>
+        <div class="dd-row"><span class="dd-label">Decision</span><span class="dd-text">${d.decision}</span></div>
+        ${d.constraint ? `<div class="dd-row"><span class="dd-label">Constraint</span><span class="dd-text">${d.constraint}</span></div>` : ""}
+      </div>`).join("");
+    return `<div class="design-decisions"><div class="dd-section-label">Design decisions</div>${items}</div>`;
+  })() : "";
+
   const annotationsHtml = iter.annotations && iter.annotations.length ? (() => {
     const hasConfig = iter.annotations.some(a => a.configuration !== undefined);
     const headerRow = hasConfig ? `
@@ -1299,6 +1368,7 @@ function renderIteration(iter, index, featureId) {
       ${iter.notes && index !== 0 ? `<p class="iter-description">${iter.notes}</p>` : ""}
       ${renderScreensOrPrototypes(iter)}
       ${renderSectionEmbed(iter)}
+      ${designDecisionsHtml}
       ${annotationsHtml}
     </div>`;
 }
