@@ -401,6 +401,16 @@
     }
 
     /* ─── Annotations ─────────────────────────────── */
+    .annotations-title {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 16px;
+      margin-bottom: 6px;
+      max-width: 960px;
+    }
     .annotations {
       margin-top: 16px;
       display: flex;
@@ -1342,7 +1352,7 @@ function renderIteration(iter, index, featureId) {
         <div class="annotation-section">${a.section}</div>
         <div class="annotation-detail" style="border-right:none">${a.detail}</div>
       </div>`).join("");
-    return `<div class="annotations">${headerRow}${rows}</div>`;
+    return `<div class="annotations-title">Component details</div><div class="annotations">${headerRow}${rows}</div>`;
   })() : "";
 
   return `
