@@ -165,6 +165,32 @@ const APP_DATA = {
               configuration: ""
             }
           ],
+          designDecisions: [
+            {
+              title: "Zero state was historically blank",
+              problem: "The search surface showed nothing until a user typed. Users in discovery mode (not query mode) had no entry point.",
+              decision: "Structured the zero state as a multi-section discovery surface covering personal history, curated suggestions, editorial, and products, so it is useful before any intent is expressed.",
+              constraint: "Sections must feel considered, not algorithmic. Swadesh's voice is unhurried and editorial; a dense product grid at zero state would undercut that."
+            },
+            {
+              title: "Editorial vs product-first hierarchy",
+              problem: "Should the zero state lead with products (highest commercial value) or editorial content (brand identity)?",
+              decision: "Editorial cards (Be Inspired) sit above Discover Latest. Brand tone is set before products are surfaced.",
+              constraint: "Luxury positioning. Swadesh is a craft platform, not a marketplace. Leading with a product grid at zero state reads as transactional. References like Cartier reinforced editorial-first as the right anchor."
+            },
+            {
+              title: "Number of editorial cards",
+              problem: "More cards give more editorial range, but smaller per-card visual impact.",
+              decision: "2 full-width cards per section is the recommended configuration for strongest visual presence. The system supports up to 4 cards if a specific campaign or seasonal requirement calls for it.",
+              constraint: "Card title is capped at 24 characters and section title at 15 + 24 characters to maintain legibility at the constrained card size."
+            },
+            {
+              title: "CMS configurability, AI recommendation and section ordering",
+              problem: "Editorial themes change seasonally. Hardcoded content would require engineering effort for every campaign.",
+              decision: "Every section is CMS-driven. Editorial images, titles, suggestion links, and the product list are all configurable without a deployment. The order of the collections (Be Inspired) and product list (Discover Latest) sections can also be reordered via CMS to give prominence to either, depending on the season's requirement. The product listing (max 8 items) can additionally be powered by an AI recommendation engine to surface personalised product suggestions in place of manual curation.",
+              constraint: "Card and title character limits (24 chars, 15 + 24 chars) are imposed to prevent layout breakage across the fixed card grid. These are non-negotiable regardless of what content is configured."
+            }
+          ],
           designFileUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
           sectionEmbedUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
           tags: ["v1", "zero-state"],
