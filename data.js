@@ -120,7 +120,7 @@ const APP_DATA = {
         {
           id: "search-iter-1",
           label: "Finalised iteration",
-          date: "2026-06-11",
+          date: "2026-06-17",
           designer: "Niharika",
           notes: "Zero state of search. All configurable sections in CMS.",
           annotations: [
