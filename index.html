@@ -295,6 +295,22 @@
       line-height: 1.65;
     }
 
+    .prd-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .prd-link:hover { border-bottom-color: var(--accent); color: var(--accent-dark); }
+    .prd-link svg { flex-shrink: 0; opacity: 0.8;
+    }
+
     /* ─── Action Buttons (header row) ─────────────── */
     .iteration-actions {
       display: flex;
@@ -795,7 +811,8 @@
     .status-pill.yet-to-start     { background: #F4F4F5; color: #71717A; }
     .status-pill.blocked          { background: #FEF2F2; color: #DC2626; }
     .status-pill.rejected         { background: #F4F4F5; color: #A1A1AA; }
-    .status-pill.completed        { background: #F0FDF4; color: #16A34A; }
+    .status-pill.completed          { background: #F0FDF4; color: #16A34A; }
+    .status-pill.handover-complete  { background: var(--accent-light); color: var(--accent-dark); }
 
     .task-row[data-feature] { cursor: pointer; transition: background 0.12s; }
     .task-row[data-feature]:hover { background: var(--accent-light); }
@@ -1382,12 +1399,13 @@ function renderIteration(iter, index, featureId) {
 }
 
 const STATUS_LABELS = {
-  "in-progress":       "In progress",
-  "shared-for-review": "Shared for review",
-  "yet-to-start":      "Yet to start",
-  "blocked":           "Blocked",
-  "rejected":          "Rejected",
-  "completed":         "Completed"
+  "in-progress":        "In progress",
+  "shared-for-review":  "Shared for review",
+  "handover-complete":  "Handover complete",
+  "yet-to-start":       "Yet to start",
+  "blocked":            "Blocked",
+  "rejected":           "Rejected",
+  "completed":          "Completed"
 };
 
 function renderHomeDashboard(tasks) {
@@ -1441,6 +1459,14 @@ function renderFeaturePanel(feature) {
     <div class="feature-intro">
       <p class="feature-intro-req">${feature.intro.requirement}</p>
       <p class="feature-intro-rationale">${feature.intro.rationale}</p>
+      ${feature.intro.prdUrl ? `
+      <a class="prd-link" href="${feature.intro.prdUrl}" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M4 2H2a1 1 0 00-1 1v11a1 1 0 001 1h12a1 1 0 001-1V9"/>
+          <path d="M8 8L15 1M15 1H10M15 1v5"/>
+        </svg>
+        View PRD
+      </a>` : ""}
     </div>` : "";
 
   if (iters.length === 0) {
