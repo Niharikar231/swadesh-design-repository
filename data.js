@@ -31,7 +31,7 @@ const APP_DATA = {
   //  type: "prd" | "adhoc"
   // ─────────────────────────────────────────────
   tasks: [
-    { id: "search-zero-state",  name: "Search — Zero state",                  status: "shared-for-review", featureId: "search"          },
+    { id: "search-zero-state",  name: "Search — Zero state",                  status: "handover-complete", featureId: "search"          },
     { id: "cash-collection",    name: "Cash collection",                       status: "in-progress",       featureId: "cash-collection" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
@@ -51,7 +51,8 @@ const APP_DATA = {
       name: "Search",
       intro: {
         requirement: "Design the zero state for search — the screen users land on when they open search before typing anything.",
-        rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue."
+        rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue.",
+        prdUrl: "https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7B446396B4-603D-41EF-A7FB-765638316995%7D&file=PRD%20_Search%20Pre%20Type%20screen%20Revamp_v2.0.docx&action=default&mobileredirect=true"
       },
       iterationsDescription: "A full record of every direction explored before the design was locked — from early wireframes testing layout and hierarchy to high-fidelity compositions evaluating editorial themes, card formats, chip patterns, and column structures. Each entry notes what was tried, what held up, and what was left behind.",
 
@@ -191,7 +192,7 @@ const APP_DATA = {
               constraint: "Card and title character limits (24 chars, 15 + 24 chars) are imposed to prevent layout breakage across the fixed card grid. These are non-negotiable regardless of what content is configured."
             }
           ],
-          designFileUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
+          designFileUrl: "https://www.figma.com/design/IXMjg2SZy8S4S9baQzUg6R/Swadesh---Dev-Handover?node-id=70853-2251&t=ItIZ4SNvHztOQuL7-4",
           sectionEmbedUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
           tags: ["v1", "zero-state"],
           mobile: {
