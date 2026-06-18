@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doorstep Cash Collection — Swadesh Design Repository</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FDFDFD;
+      --surface: #FEFEFE;
+      --border: #EAE6F0;
+      --text-primary: #1C0F35;
+      --text-secondary: #7A7A84;
+      --text-muted: #ABABAB;
+      --accent: #7A71DA;
+      --accent-dark: #6259BF;
+      --accent-light: #EEEAFF;
+      --tag-bg: #EEEAFF;
+      --tag-text: #5A52B8;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 1px 3px rgba(122,113,218,0.07), 0 1px 2px rgba(122,113,218,0.04);
+      --shadow-card: 0 2px 10px rgba(122,113,218,0.09), 0 1px 3px rgba(122,113,218,0.05);
+    }
+
+    html { font-size: 16px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ─── Hero ─────────────────────── */
+    .page-hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 48px 40px 40px; }
+    .page-hero-inner { max-width: 1400px; margin: 0 auto; }
+    .page-hero h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-hero p { font-size: 0.95rem; color: var(--text-secondary); max-width: 560px; line-height: 1.6; margin-bottom: 14px; }
+    .page-hero .last-updated { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ─── Navs ──────────────────────── */
+    .top-nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 40px; }
+    .top-nav-inner { max-width: 1400px; margin: 0 auto; display: flex; gap: 4px; }
+    .nav-btn {
+      padding: 12px 16px; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+      background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent;
+      text-decoration: none; display: inline-block; transition: color .15s;
+    }
+    .nav-btn:hover { color: var(--text-primary); }
+    .nav-btn.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+
+    .feature-nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 40px; position: sticky; top: 0; z-index: 100; }
+    .feature-nav-inner { max-width: 1400px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+    .feature-nav-inner::-webkit-scrollbar { display: none; }
+    .feature-tab {
+      padding: 14px 18px; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+      background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent;
+      white-space: nowrap; text-decoration: none; display: inline-block; transition: color .15s;
+    }
+    .feature-tab:hover { color: var(--text-primary); }
+    .feature-tab.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+
+    /* ─── Main ──────────────────────── */
+    .main { max-width: 1400px; margin: 0 auto; padding: 40px 40px 80px; }
+
+    /* ─── Intro ─────────────────────── */
+    .feature-intro { max-width: 760px; margin-bottom: 40px; }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.75rem; font-weight: 600; padding: 3px 10px;
+      border-radius: var(--radius-pill); background: #FFF8E6; color: #B87A00; margin-bottom: 16px;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #F5A623; }
+    .requirement { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; line-height: 1.5; }
+    .rationale { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+    .prd-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; color: var(--accent); text-decoration: none; font-weight: 500;
+    }
+    .prd-link:hover { text-decoration: underline; }
+
+    /* ─── Iteration block ─────────────── */
+    .iteration-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 32px;
+      margin-bottom: 24px; box-shadow: var(--shadow-card);
+    }
+    .iteration-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .iteration-label { font-size: 1rem; font-weight: 700; }
+    .iteration-date { font-size: 0.78rem; color: var(--text-muted); background: var(--accent-light); padding: 2px 8px; border-radius: var(--radius-pill); }
+    .iteration-designer { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 16px; }
+    .iteration-notes {
+      font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 20px; padding: 14px 16px;
+      background: #F7F5FF; border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .tag-row { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; padding: 3px 9px; border-radius: var(--radius-pill); background: var(--tag-bg); color: var(--tag-text); text-transform: uppercase; }
+
+    /* ─── Full-width Figma embed ──────── */
+    .figma-panel-full {
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      overflow: hidden; background: #F9F8FD; min-height: 560px;
+      display: flex; flex-direction: column; margin-bottom: 32px;
+    }
+    .figma-panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .figma-panel-label { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; font-weight: 600; }
+    .figma-panel-caption { font-size: 0.75rem; color: var(--text-muted); }
+    .figma-panel-body {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; padding: 40px; text-align: center;
+    }
+    .figma-icon-box {
+      width: 48px; height: 48px; border-radius: var(--radius-sm);
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm);
+    }
+    .figma-panel-body h4 { font-size: 0.88rem; font-weight: 600; }
+    .figma-panel-body p { font-size: 0.78rem; color: var(--text-muted); }
+    .btn-load {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.82rem; font-weight: 600; padding: 9px 18px;
+      border-radius: var(--radius-pill); background: var(--accent);
+      color: #fff; border: none; cursor: pointer; transition: background .15s;
+    }
+    .btn-load:hover { background: var(--accent-dark); }
+    .figma-iframe-wrap { flex: 1; }
+    .figma-iframe-wrap iframe { width: 100%; height: 100%; min-height: 560px; border: none; display: block; }
+
+    /* ─── Section label ───────────────── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted); margin: 28px 0 16px;
+    }
+
+    /* ─── Screen cards (screenshot grid) ── */
+    .screen-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .screen-card {
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      overflow: hidden; background: #F9F8FD;
+    }
+    .screen-card img {
+      width: 100%; display: block;
+      border-bottom: 1px solid var(--border);
+    }
+    .screen-card-info { padding: 10px 12px; }
+    .screen-card-name { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+    .screen-card-desc { font-size: 0.74rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Wide screenshot cards (for iteration sub-sections) */
+    .screen-cards-wide {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .screen-card-wide {
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      overflow: hidden; background: #F9F8FD;
+    }
+    .screen-card-wide img { width: 100%; display: block; border-bottom: 1px solid var(--border); }
+    .screen-card-wide .screen-card-info { padding: 12px 14px; }
+
+    /* ─── Design decisions ────────────── */
+    .decisions-list { max-width: 640px; }
+    .decision-item { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .decision-item:last-child { border-bottom: none; }
+    .decision-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
+    .decision-row { margin-bottom: 10px; }
+    .decision-row-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .decision-row-text { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; }
+    .open-item-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; font-weight: 600; color: #B87A00;
+      background: #FFF8E6; padding: 3px 10px; border-radius: var(--radius-pill); margin-bottom: 6px;
+    }
+
+    /* ─── Annotations table ───────────── */
+    .table-wrap { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .ann-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .ann-table thead tr { background: #F5F3FF; }
+    .ann-table th { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .ann-table td { padding: 12px 16px; vertical-align: top; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.6; }
+    .ann-table tr:last-child td { border-bottom: none; }
+    .ann-table td:first-child { font-weight: 600; color: var(--text-primary); width: 22%; }
+    .ann-table td:nth-child(2) { width: 45%; }
+    .ann-table td:nth-child(3) { width: 33%; }
+    .ann-table tbody tr:hover { background: #FAFAFF; }
+
+    @media (max-width: 768px) {
+      .page-hero { padding: 32px 20px 24px; }
+      .top-nav, .feature-nav { padding: 0 20px; }
+      .main { padding: 24px 20px 60px; }
+      .iteration-block { padding: 20px; }
+      .screen-cards { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .screen-cards-wide { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <h1>Swadesh design repository</h1>
+    <p>A living reference for ongoing and completed design work across prioritised features. One place for all stakeholders to review specifications, screens, and prototypes — and a complete record of every iteration that shaped the final solution.</p>
+    <div class="last-updated">Last updated: 18 Jun 2026</div>
+  </div>
+</div>
+
+<!-- Top nav -->
+<nav class="top-nav">
+  <div class="top-nav-inner">
+    <a href="https://niharikar231.github.io/swadesh-design-repository/" class="nav-btn">Home</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#cash-collection" class="nav-btn active">Projects</a>
+  </div>
+</nav>
+
+<!-- Feature tabs -->
+<nav class="feature-nav">
+  <div class="feature-nav-inner">
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#search" class="feature-tab">Search</a>
+    <span class="feature-tab active">Doorstep Cash Collection</span>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#corporate-po" class="feature-tab">Corporate Purchase Order</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#ops-pay-link" class="feature-tab">Ops Assisted pay-link</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#partial-payment" class="feature-tab">Partial Payment for Bespoke orders</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#tcs" class="feature-tab">Tax collection at source</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#mop" class="feature-tab">MOP</a>
+    <a href="https://niharikar231.github.io/swadesh-design-repository/#whatsapp-floater" class="feature-tab">Whatsapp floater</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Intro -->
+  <div class="feature-intro">
+    <div class="status-badge"><div class="status-dot"></div> In progress</div>
+    <div class="requirement">Design the doorstep cash collection payment option at checkout, including slot scheduling and order status communication.</div>
+    <div class="rationale">Swadesh's delivery partners are only authorised to collect Cash on Delivery payments up to ₹50,000 — yet a meaningful segment of customers wants to pay cash for high-value orders between ₹50K and ₹2L. Without a supported path, these orders are abandoned, creating direct revenue loss on Swadesh's highest-value artisan pieces. Doorstep Cash Collection addresses this by engaging a CMS (Cash Management Service) team to visit the customer, collect payment, and deposit it directly into Swadesh's account. The order is placed in a locked/pending state at checkout and moves to fulfilment only after the CMS team confirms collection — keeping the transaction compliant, the inventory reserved, and the customer experience premium.</div>
+    <a class="prd-link" href="https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7B7D4B482E-15EB-4660-9FFC-9ECCE9406B8A%7D&file=Cash-Collection-PRD.docx&action=default&mobileredirect=true" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5v5M14 2 8 8"/></svg>
+      View PRD
+    </a>
+  </div>
+
+  <!-- ══ FINALISED ITERATION ════════════════════════ -->
+  <div class="iteration-block">
+    <div class="iteration-header">
+      <span class="iteration-label">Finalised iteration</span>
+      <span class="iteration-date">Updated 18 Jun 2026</span>
+    </div>
+    <div class="iteration-designer">Niharika</div>
+    <div class="tag-row"><span class="tag">v1</span></div>
+
+    <!-- Single full-width mobile embed -->
+    <div class="figma-panel-full" id="panel-main">
+      <div class="figma-panel-header">
+        <div class="figma-panel-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Mobile
+        </div>
+        <span class="figma-panel-caption">Mobile · Doorstep Cash Collection</span>
+      </div>
+      <div class="figma-panel-body" id="panel-main-placeholder">
+        <div class="figma-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A7A84" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h4>Mobile · Doorstep Cash Collection</h4>
+        <p>Click to load interactive design</p>
+        <button class="btn-load" onclick="loadFigma('panel-main','panel-main-placeholder','https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FBLJzYVd9thvScl9gxDeLxH%2FUX-definition-V3%3Fnode-id%3D3410-12414%26t%3D4fqPtzlQ6gMu0kPf-4')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Load design
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Design decisions -->
+    <div class="section-label" style="margin-top: 36px;">Design decisions</div>
+    <div class="decisions-list">
+
+      <div class="decision-item">
+        <div class="decision-title">Pre-pay / Pay on Delivery — payment method bucketing</div>
+        <div class="decision-row">
+          <div class="decision-row-label">Problem</div>
+          <div class="decision-row-text">The previous "Pay online / Pay on delivery" labels couldn't accommodate Doorstep Cash Collection — a method where payment happens before dispatch but not online.</div>
+        </div>
+        <div class="decision-row">
+          <div class="decision-row-label">Decision</div>
+          <div class="decision-row-text">Renamed buckets to "Pre-pay" and "Pay on Delivery" to be more logically accurate and scalable for future payment modes.</div>
+        </div>
+        <div class="decision-row">
+          <div class="decision-row-label">Constraint</div>
+          <div class="decision-row-text">Payment method label nomenclature needs to be updated across all surfaces.</div>
+        </div>
+      </div>
+
+      <div class="decision-item">
+        <div class="decision-title">Post-order slot selection</div>
+        <div class="decision-row">
+          <div class="decision-row-label">Problem</div>
+          <div class="decision-row-text">Collecting the cash collection slot time pre-order adds friction to checkout at a point where the customer is already committing to a new payment behaviour.</div>
+        </div>
+        <div class="decision-row">
+          <div class="decision-row-label">Decision</div>
+          <div class="decision-row-text">Slot selection moved to the order placed screen, after the order is confirmed. WhatsApp comms serve as the fallback if the user doesn't select a slot on the website.</div>
+        </div>
+      </div>
+
+      <div class="decision-item">
+        <div class="decision-title">Two-factor authentication</div>
+        <div class="decision-row">
+          <div class="decision-row-label">Problem</div>
+          <div class="decision-row-text">The CMS agent verification requires two-factor authentication to protect customers when handing over cash, but the process flow depends on third-party CMS decisions.</div>
+        </div>
+        <div class="decision-row">
+          <div class="decision-row-label">Decision</div>
+          <div class="decision-row-text">
+            <div class="open-item-badge">⚠️ Open item — pending CMS stakeholder input</div><br>
+            Awaiting process flow and API contract from the CMS team before UI can be finalised.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Component details -->
+    <div class="section-label" style="margin-top: 36px;">Component details</div>
+    <div class="table-wrap">
+      <table class="ann-table">
+        <thead>
+          <tr><th>Section</th><th>Description</th><th>Configuration</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Order placed — slot booking</td>
+            <td>Earliest slot selected by default.</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Order placed — slot booking</td>
+            <td>The nudge copy is positioned post-selection — reinforcing the choice rather than pressuring before it.</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /finalised iteration -->
+
+
+  <!-- ══ ITERATION V2 ═══════════════════════════════ -->
+  <div class="iteration-block">
+    <div class="iteration-header">
+      <span class="iteration-label">Iteration — Checkout, confirmation &amp; order status</span>
+      <span class="iteration-date">Updated 18 Jun 2026</span>
+    </div>
+    <div class="iteration-designer">Niharika</div>
+    <div class="tag-row"><span class="tag">v2</span></div>
+
+    <div class="iteration-notes">
+      This iteration explored three areas: (1) placing Doorstep Cash Collection under "Pay on Delivery" with an inline expandable info panel at checkout, (2) introducing an "Order Reserved" confirmation state to distinguish a cash-pending order from a placed one, and (3) a "Live Artfully" interstitial post-slot-confirmation. The final direction consolidated these — the info moved to a "Know more" bottom sheet to keep checkout cleaner, "Order Reserved" was dropped in favour of "Order Placed" to avoid confusing customers with an unfamiliar status, and the interstitial was removed.
+    </div>
+
+    <div class="screen-cards-wide">
+      <div class="screen-card-wide">
+        <img src="cc-iter-checkout.png" alt="Checkout — earlier direction">
+        <div class="screen-card-info">
+          <div class="screen-card-name">Checkout</div>
+          <div class="screen-card-desc">Doorstep Cash Collection placed under "Pay on Delivery" with an inline expandable description on selection, rather than a separate "Know more" bottom sheet.</div>
+        </div>
+      </div>
+      <div class="screen-card-wide">
+        <img src="cc-iter-confirmation.png" alt="Confirmation screen — earlier direction">
+        <div class="screen-card-info">
+          <div class="screen-card-name">Confirmation screen</div>
+          <div class="screen-card-desc">Explored an "Order Reserved" state and a "Live Artfully" interstitial post-slot-confirmation. Both were dropped — "Order Reserved" was unfamiliar to users, and the interstitial added unnecessary friction.</div>
+        </div>
+      </div>
+      <div class="screen-card-wide">
+        <img src="cc-iter-order-status.png" alt="Order status — earlier direction">
+        <div class="screen-card-info">
+          <div class="screen-card-name">Order status</div>
+          <div class="screen-card-desc">Order details page showing "Order reserved" status in the tracker. The finalised version uses "Order Placed" to align with familiar order terminology and avoid confusion.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /iteration v2 -->
+
+</main>
+
+<script>
+  function loadFigma(panelId, placeholderId, embedUrl) {
+    const panel = document.getElementById(panelId);
+    const placeholder = document.getElementById(placeholderId);
+    placeholder.style.display = 'none';
+    const wrap = document.createElement('div');
+    wrap.className = 'figma-iframe-wrap';
+    const iframe = document.createElement('iframe');
+    iframe.src = embedUrl;
+    iframe.allow = 'fullscreen';
+    iframe.allowFullscreen = true;
+    wrap.appendChild(iframe);
+    panel.appendChild(wrap);
+  }
+</script>
+
+</body>
+</html>
