@@ -138,7 +138,7 @@ const APP_DATA = {
             {
               section: "You might be interested in",
               detail: "Curated suggestion list rendered as plain text links. Sample: Mysore Rosewood Inlay, Banarasi Silk Sarees, Bronze Statues, Chikankari Kurti.",
-              configuration: "CMS-driven. All links configurable. An AI recommendation engine can be plugged in to dynamically surface products."
+              configuration: "CMS-driven. All links configurable. An AI recommendation engine can be plugged in to dynamically surface keywords."
             },
             {
               section: "Be inspired (editorial cards)",
