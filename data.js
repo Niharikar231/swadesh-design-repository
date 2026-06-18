@@ -445,10 +445,7 @@ const APP_DATA = {
             figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3410-12414&t=4fqPtzlQ6gMu0kPf-4",
             caption: "Mobile · Doorstep Cash Collection"
           },
-          desktop: {
-            figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3410-12414&t=4fqPtzlQ6gMu0kPf-4",
-            caption: "Desktop · Doorstep Cash Collection"
-          },
+          desktop: { figmaUrl: "", caption: "" },
           designDecisions: [
             {
               title: "Pre-pay / Pay on Delivery — payment method bucketing",
