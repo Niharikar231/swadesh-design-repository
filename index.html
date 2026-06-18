@@ -1318,11 +1318,14 @@ function renderScreensOrPrototypes(iter) {
     return `<div class="${cls}">${cards.join("")}</div>`;
   }
 
-  // Prototype mode: show both columns always
-  return `<div class="prototype-grid">
-    ${renderEmbedCard("mobile",  m)}
-    ${renderEmbedCard("desktop", d)}
-  </div>`;
+  // Prototype mode: only render desktop if it has a figmaUrl
+  const hasMobileEmbed  = !!m.figmaUrl;
+  const hasDesktopEmbed = !!d.figmaUrl;
+  const embedCards = [];
+  if (hasMobileEmbed)  embedCards.push(renderEmbedCard("mobile",  m));
+  if (hasDesktopEmbed) embedCards.push(renderEmbedCard("desktop", d));
+  const embedCls = embedCards.length === 1 ? "prototype-grid single-col" : "prototype-grid";
+  return `<div class="${embedCls}">${embedCards.join("")}</div>`;
 }
 
 function renderIteration(iter, index, featureId) {
