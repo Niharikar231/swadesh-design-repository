@@ -443,7 +443,8 @@ const APP_DATA = {
           notes: "",
           tags: ["v1"],
           mobile: {
-            figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3410-12414&t=4fqPtzlQ6gMu0kPf-4",
+            figmaUrl: "",
+            screenshotUrl: "cc-checkout.png",
             caption: "Mobile · Doorstep Cash Collection"
           },
           desktop: { figmaUrl: "", caption: "" },
@@ -488,13 +489,11 @@ const APP_DATA = {
           notes: "This iteration explored three areas: (1) placing Doorstep Cash Collection under 'Pay on Delivery' with an inline expandable info panel at checkout, (2) introducing an 'Order Reserved' confirmation state to distinguish a cash-pending order from a placed one, and (3) a 'Live Artfully' interstitial post-slot-confirmation. The final direction consolidated these — the info moved to a 'Know more' bottom sheet to keep checkout cleaner, 'Order Reserved' was dropped in favour of 'Order Placed' to avoid confusing customers with an unfamiliar status, and the interstitial was removed.",
           tags: ["v2"],
           mobile: {
-            figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3436-34743&t=4fqPtzlQ6gMu0kPf-4",
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-checkout.png",
             caption: "Mobile · Checkout, confirmation & order status — earlier direction"
           },
-          desktop: {
-            figmaUrl: "",
-            caption: ""
-          }
+          desktop: { figmaUrl: "", caption: "" }
         }
 
       ]
