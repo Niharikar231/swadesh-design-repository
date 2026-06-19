@@ -424,6 +424,7 @@ const APP_DATA = {
     // ── Feature 2 ──────────────────────────────
     {
       id: "cash-collection",
+      locked: true,
       name: "Doorstep Cash Collection",
       intro: {
         requirement: "Design the doorstep cash collection payment option at checkout, including slot scheduling and order status communication.",
