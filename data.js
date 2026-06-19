@@ -482,15 +482,47 @@ const APP_DATA = {
         // ── Iteration 2 ──────────────────────
         {
           id: "cash-collection-iter-2",
-          label: "Iteration — Checkout, confirmation & order status",
+          label: "Iteration — Checkout",
           date: "2026-06-18",
           designer: "Niharika",
-          notes: "This iteration explored three areas: (1) placing Doorstep Cash Collection under 'Pay on Delivery' with an inline expandable info panel at checkout, (2) introducing an 'Order Reserved' confirmation state to distinguish a cash-pending order from a placed one, and (3) a 'Live Artfully' interstitial post-slot-confirmation. The final direction consolidated these — the info moved to a 'Know more' bottom sheet to keep checkout cleaner, 'Order Reserved' was dropped in favour of 'Order Placed' to avoid confusing customers with an unfamiliar status, and the interstitial was removed.",
+          notes: "Explored placing Doorstep Cash Collection under 'Pay on Delivery' with an inline expandable info panel that appears on selection. The finalised design moved this to a 'Know more' bottom sheet to keep checkout cleaner and reduce visual noise for users who don't need the explanation.",
           tags: ["v2"],
           mobile: {
             figmaUrl: "",
             screenshotUrl: "cc-iter-checkout.png",
-            caption: "Mobile · Checkout, confirmation & order status — earlier direction"
+            caption: "Mobile · Checkout — earlier direction"
+          },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Iteration 3 ──────────────────────
+        {
+          id: "cash-collection-iter-3",
+          label: "Iteration — Confirmation screen",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Introduced an 'Order Reserved' state to distinguish a cash-pending order from a fully placed one, paired with a 'Live Artfully' interstitial post-slot-confirmation. Both were dropped — 'Order Reserved' was an unfamiliar status that created confusion, and the interstitial added friction without adding value. The finalised design uses 'Order Placed' throughout.",
+          tags: ["v2"],
+          mobile: {
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-confirmation.png",
+            caption: "Mobile · Confirmation screen — earlier direction"
+          },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Iteration 4 ──────────────────────
+        {
+          id: "cash-collection-iter-4",
+          label: "Iteration — Order status",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Tested surfacing the 'Order Reserved' status in the order tracker on the order details page. The reserved state created stakeholder concerns around customer expectations and returns handling. The finalised design uses standard 'Order Placed' terminology, with the payment status (Pending / Completed) shown separately in the payment method row.",
+          tags: ["v2"],
+          mobile: {
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-order-status.png",
+            caption: "Mobile · Order status — earlier direction"
           },
           desktop: { figmaUrl: "", caption: "" }
         }
