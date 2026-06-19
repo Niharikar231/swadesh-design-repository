@@ -443,8 +443,7 @@ const APP_DATA = {
           notes: "",
           tags: ["v1"],
           mobile: {
-            figmaUrl: "",
-            screenshotUrl: "cc-checkout.png",
+            figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3410-12414&t=4fqPtzlQ6gMu0kPf-4",
             caption: "Mobile · Doorstep Cash Collection"
           },
           desktop: { figmaUrl: "", caption: "" },
