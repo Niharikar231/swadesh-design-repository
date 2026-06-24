@@ -31,8 +31,8 @@ const APP_DATA = {
   //  type: "prd" | "adhoc"
   // ─────────────────────────────────────────────
   tasks: [
-    { id: "search-zero-state",  name: "Search — Zero state",                  status: "handover-complete", featureId: "search"          },
-    { id: "cash-collection",    name: "Cash collection",                       status: "in-progress",       featureId: "cash-collection" },
+    { id: "search-zero-state",  name: "Search — Zero state",                  status: "shared-for-review", featureId: "search"          },
+    { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "in-progress",       featureId: "cash-collection" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
     { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
@@ -51,8 +51,7 @@ const APP_DATA = {
       name: "Search",
       intro: {
         requirement: "Design the zero state for search — the screen users land on when they open search before typing anything.",
-        rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue.",
-        prdUrl: "https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7B446396B4-603D-41EF-A7FB-765638316995%7D&file=PRD%20_Search%20Pre%20Type%20screen%20Revamp_v2.0.docx&action=default&mobileredirect=true"
+        rationale: "Search is one of the highest-traffic entry points on the platform. The zero state has historically been blank — a missed opportunity when users are in discovery mode rather than query mode. The brief was to make this surface genuinely useful: surfacing editorial curation, recent search history, curated suggestions, and crafts content to bridge browsing intent with the depth of the catalogue."
       },
       iterationsDescription: "A full record of every direction explored before the design was locked — from early wireframes testing layout and hierarchy to high-fidelity compositions evaluating editorial themes, card formats, chip patterns, and column structures. Each entry notes what was tried, what held up, and what was left behind.",
 
@@ -121,7 +120,7 @@ const APP_DATA = {
         {
           id: "search-iter-1",
           label: "Finalised iteration",
-          date: "2026-06-23",
+          date: "2026-06-11",
           designer: "Niharika",
           notes: "Zero state of search. All configurable sections in CMS.",
           annotations: [
@@ -138,7 +137,7 @@ const APP_DATA = {
             {
               section: "You might be interested in",
               detail: "Curated suggestion list rendered as plain text links. Sample: Mysore Rosewood Inlay, Banarasi Silk Sarees, Bronze Statues, Chikankari Kurti.",
-              configuration: "CMS-driven. All links configurable. An AI recommendation engine can be plugged in to dynamically surface keywords."
+              configuration: "CMS-driven. All links configurable. An AI recommendation engine can be plugged in to dynamically surface products."
             },
             {
               section: "Be inspired (editorial cards)",
@@ -166,33 +165,7 @@ const APP_DATA = {
               configuration: ""
             }
           ],
-          designDecisions: [
-            {
-              title: "Zero state was historically blank",
-              problem: "The search surface showed nothing until a user typed. Users in discovery mode (not query mode) had no entry point.",
-              decision: "Structured the zero state as a multi-section discovery surface covering personal history, curated suggestions, editorial, and products, so it is useful before any intent is expressed.",
-              constraint: "Sections must feel considered, not algorithmic. Swadesh's voice is unhurried and editorial; a dense product grid at zero state would undercut that."
-            },
-            {
-              title: "Editorial vs product-first hierarchy",
-              problem: "Should the zero state lead with products (highest commercial value) or editorial content (brand identity)?",
-              decision: "Editorial cards (Be Inspired) sit above Discover Latest. Brand tone is set before products are surfaced.",
-              constraint: "Luxury positioning. Swadesh is a craft platform, not a marketplace. Leading with a product grid at zero state reads as transactional. References like Cartier reinforced editorial-first as the right anchor."
-            },
-            {
-              title: "Number of editorial cards",
-              problem: "More cards give more editorial range, but smaller per-card visual impact.",
-              decision: "2 full-width cards per section is the recommended configuration for strongest visual presence. The system supports up to 4 cards if a specific campaign or seasonal requirement calls for it.",
-              constraint: "Card title is capped at 24 characters and section title at 15 + 24 characters to maintain legibility at the constrained card size."
-            },
-            {
-              title: "CMS configurability, AI recommendation and section ordering",
-              problem: "Editorial themes change seasonally. Hardcoded content would require engineering effort for every campaign.",
-              decision: "Every section is CMS-driven. Editorial images, titles, suggestion links, and the product list are all configurable without a deployment. The order of the collections (Be Inspired) and product list (Discover Latest) sections can also be reordered via CMS to give prominence to either, depending on the season's requirement. The product listing (max 8 items) can additionally be powered by an AI recommendation engine to surface personalised product suggestions in place of manual curation.",
-              constraint: "Card and title character limits (24 chars, 15 + 24 chars) are imposed to prevent layout breakage across the fixed card grid. These are non-negotiable regardless of what content is configured."
-            }
-          ],
-          designFileUrl: "https://www.figma.com/design/IXMjg2SZy8S4S9baQzUg6R/Swadesh---Dev-Handover?node-id=70853-2251&t=ItIZ4SNvHztOQuL7-4",
+          designFileUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
           sectionEmbedUrl: "https://www.figma.com/design/2RDOfw58K5HptIQOtAfjWx/Search---zero-state?node-id=70853-2251&t=kF1CKdZfe5XiZd0q-4",
           tags: ["v1", "zero-state"],
           mobile: {
@@ -451,11 +424,110 @@ const APP_DATA = {
     // ── Feature 2 ──────────────────────────────
     {
       id: "cash-collection",
-      name: "Cash collection",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for Cash collection is being prepared and will be available here shortly.",
-      intro: { requirement: "Design the cash collection flow.", rationale: "Documentation in progress." },
-      iterations: []
+      locked: true,
+      name: "Doorstep Cash Collection",
+      intro: {
+        requirement: "Design the doorstep cash collection payment option at checkout, including slot scheduling and order status communication.",
+        rationale: "Swadesh's delivery partners are only authorised to collect Cash on Delivery payments up to ₹50,000 — yet a meaningful segment of customers wants to pay cash for high-value orders between ₹50K and ₹2L. Without a supported path, these orders are abandoned, creating direct revenue loss on Swadesh's highest-value artisan pieces. Doorstep Cash Collection addresses this by engaging a CMS (Cash Management Service) team to visit the customer, collect payment, and deposit it directly into Swadesh's account. The order is placed in a locked/pending state at checkout and moves to fulfilment only after the CMS team confirms collection — keeping the transaction compliant, the inventory reserved, and the customer experience premium.",
+        prdUrl: "https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7B7D4B482E-15EB-4660-9FFC-9ECCE9406B8A%7D&file=Cash-Collection-PRD.docx&action=default&mobileredirect=true"
+      },
+      iterationsDescription: "A record of the directions explored before the current design was established — covering earlier checkout treatments, confirmation screen states, and order status page variants.",
+      iterations: [
+
+        // ── Finalised iteration ──────────────
+        {
+          id: "cash-collection-iter-1",
+          label: "Finalised iteration",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "",
+          tags: ["v1"],
+          mobile: {
+            figmaUrl: "https://www.figma.com/design/BLJzYVd9thvScl9gxDeLxH/UX-definition-V3?node-id=3410-12414&t=4fqPtzlQ6gMu0kPf-4",
+            caption: "Mobile · Doorstep Cash Collection"
+          },
+          desktop: { figmaUrl: "", caption: "" },
+          designDecisions: [
+            {
+              title: "Pre-pay / Pay on Delivery — payment method bucketing",
+              problem: "The previous 'Pay online / Pay on delivery' labels couldn't accommodate Doorstep Cash Collection — a method where payment happens before dispatch but not online.",
+              decision: "Renamed buckets to 'Pre-pay' and 'Pay on Delivery' to be more logically accurate and scalable for future payment modes.",
+              constraint: "Payment method label nomenclature needs to be updated across all surfaces."
+            },
+            {
+              title: "Post-order slot selection",
+              problem: "Collecting the cash collection slot time pre-order adds friction to checkout at a point where the customer is already committing to a new payment behaviour.",
+              decision: "Slot selection moved to the order placed screen, after the order is confirmed. WhatsApp comms serve as the fallback if the user doesn't select a slot on the website."
+            },
+            {
+              title: "Two-factor authentication — open item",
+              problem: "The CMS agent verification process requires two-factor authentication to protect customers when handing over cash, but the process flow and technical approach depend on decisions from the third-party CMS team.",
+              decision: "⚠️ Pending. Awaiting process flow and API contract from the CMS stakeholder before UI can be finalised."
+            }
+          ],
+          annotations: [
+            {
+              section: "Order placed — slot booking",
+              detail: "Earliest slot selected by default.",
+              configuration: ""
+            },
+            {
+              section: "Order placed — slot booking",
+              detail: "The nudge copy is positioned post-selection — reinforcing the choice rather than pressuring before it.",
+              configuration: ""
+            }
+          ]
+        },
+
+        // ── Iteration 2 ──────────────────────
+        {
+          id: "cash-collection-iter-2",
+          label: "Iteration — Checkout",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Explored placing Doorstep Cash Collection under 'Pay on Delivery' with an inline expandable info panel that appears on selection. The finalised design moved this to a 'Know more' bottom sheet to keep checkout cleaner and reduce visual noise for users who don't need the explanation.",
+          tags: ["v2"],
+          mobile: {
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-checkout.png",
+            caption: "Mobile · Checkout — earlier direction"
+          },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Iteration 3 ──────────────────────
+        {
+          id: "cash-collection-iter-3",
+          label: "Iteration — Confirmation screen",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Introduced an 'Order Reserved' state to distinguish a cash-pending order from a fully placed one, paired with a 'Live Artfully' interstitial post-slot-confirmation. Both were dropped — 'Order Reserved' was an unfamiliar status that created confusion, and the interstitial added friction without adding value. The finalised design uses 'Order Placed' throughout.",
+          tags: ["v2"],
+          mobile: {
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-confirmation.png",
+            caption: "Mobile · Confirmation screen — earlier direction"
+          },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Iteration 4 ──────────────────────
+        {
+          id: "cash-collection-iter-4",
+          label: "Iteration — Order status",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Tested surfacing the 'Order Reserved' status in the order tracker on the order details page. The reserved state created stakeholder concerns around customer expectations and returns handling. The finalised design uses standard 'Order Placed' terminology, with the payment status (Pending / Completed) shown separately in the payment method row.",
+          tags: ["v2"],
+          mobile: {
+            figmaUrl: "",
+            screenshotUrl: "cc-iter-order-status.png",
+            caption: "Mobile · Order status — earlier direction"
+          },
+          desktop: { figmaUrl: "", caption: "" }
+        }
+
+      ]
     },
 
     // ── Feature 3 ──────────────────────────────
@@ -511,7 +583,7 @@ const APP_DATA = {
       iterations: []
     },
 
-    // ── Feature 3 ──────────────────────────────
+    // ── Feature 8 ──────────────────────────────
     {
       id: "whatsapp-floater",
       name: "Whatsapp floater",
