@@ -555,11 +555,11 @@ const APP_DATA = {
           sectionEmbedUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
           tags: ["v1"],
           mobile: {
-            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71569-36795&viewport=-33%2C473%2C0.11&t=tFLA0jB7HiQSPBUV-0&scaling=contain&content-scaling=fixed&starting-point-node-id=71569%3A36795&show-proto-sidebar=1",
+            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71576-49418&viewport=352%2C172%2C0.06&t=tFLA0jB7HiQSPBUV-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=71576%3A49418&show-proto-sidebar=1",
             caption: "Mobile · PDP — Last Item ATC"
           },
           desktop: {
-            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71569-36312&viewport=737%2C491%2C0.11&t=tFLA0jB7HiQSPBUV-0&scaling=contain&content-scaling=fixed&starting-point-node-id=71569%3A36312&show-proto-sidebar=1",
+            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71576-50291&viewport=622%2C224%2C0.06&t=tFLA0jB7HiQSPBUV-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=71576%3A50291&show-proto-sidebar=1",
             caption: "Desktop · PDP — Last Item ATC"
           },
           designDecisions: [
