@@ -33,6 +33,7 @@ const APP_DATA = {
   tasks: [
     { id: "search-zero-state",  name: "Search — Zero state",                  status: "shared-for-review", featureId: "search"          },
     { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "in-progress",       featureId: "cash-collection" },
+    { id: "pdp-last-item-atc", name: "PDP — Last Item ATC",                  status: "in-progress",       featureId: "pdp-last-item-atc" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
     { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
@@ -531,6 +532,120 @@ const APP_DATA = {
     },
 
     // ── Feature 3 ──────────────────────────────
+    {
+      id: "pdp-last-item-atc",
+      locked: true,
+      name: "PDP — Last Item ATC",
+      intro: {
+        requirement: "Design the messaging and state changes on the PDP when the last available unit has been added to cart, and a user — in the same session or returning — attempts to add more.",
+        rationale: "Three problems drive this work. First, when the last item in inventory is already in the user's cart and they try to add another, the current experience fires a generic 'Out of stock' toast — but the product isn't truly out of stock; it's reserved in their own bag. This is misleading for same-session users who have no visibility into why their action failed. Second, a returning user who added the last item in a previous session encounters the same opaque state with no explanation, eroding trust and risking abandonment. Third, after a successful 'Add to Bag' action, the CTA label doesn't change — leaving users uncertain whether their action registered and whether clicking again would create a duplicate. A state-based CTA (e.g. 'Go to Bag') confirms the action and creates a forward path in the purchasing journey.",
+        prdUrl: "https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7BF85DEC22-67A0-47ED-BDD7-6CA04CE87997%7D&file=Incremental%20ATC%20Messaging%20on%20PDP.docx&action=default&mobileredirect=true"
+      },
+      iterationsDescription: "Explorations across six directions — from low-inventory indicators and quantity steppers to pop-up confirmations and CTA state changes — before landing on a modal info approach scoped to cart-aware last-item scenarios.",
+      iterations: [
+
+        // ── Finalised iteration ──────────────────
+        {
+          id: "pdp-last-item-atc-iter-1",
+          label: "Finalised iteration",
+          date: "2026-06-26",
+          designer: "Niharika",
+          notes: "",
+          tags: ["v1"],
+          mobile: {
+            figmaUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
+            caption: "Mobile · PDP — Last Item ATC"
+          },
+          desktop: { figmaUrl: "", caption: "" },
+          designDecisions: [
+            {
+              title: "Modal over toast for cart-aware messaging",
+              problem: "A dismissible toast reading 'Out of stock' is ambiguous when the item is actually in the user's own cart. It gives no explanation, no path forward, and is easy to miss — especially for returning users who don't have same-session context.",
+              decision: "Use a modal (op1 approach) to surface a clear, persistent message that explains the item is already in their bag and prompts the next action. The modal is scoped only to this cart-aware scenario — standard out-of-stock states on PDP remain unchanged.",
+              constraint: "This scenario can only occur when the product is in the cart. An otherwise out-of-stock product is inaccessible on PDP, so the modal logic must be gated on cart-presence detection."
+            },
+            {
+              title: "CTA state change post-add",
+              problem: "'Add to Bag' persisting after a successful action provides no feedback on what happened and invites repeated clicks that could create duplicate items or confusion.",
+              decision: "Transition the CTA label to confirm the completed action (e.g. 'Go to Bag'), directing the user toward checkout rather than looping back to the same action. This closes the interaction and makes the forward path obvious."
+            },
+            {
+              title: "⚠️ Open item — API and cart-link dependency",
+              problem: "The cart-aware messaging logic requires knowing in real time whether the product is in the cart, and the PDP needs a reliable link to cart state to trigger the correct UI.",
+              decision: "⚠️ Pending. API call timing and the PDP–cart data link are unresolved. Awaiting confirmation from tech on feasibility and latency before UI is finalised."
+            }
+          ],
+          annotations: [
+            { section: "Out of stock modal", detail: "Triggered only when user attempts to add a product already present in their cart at max/last-item quantity.", configuration: "" },
+            { section: "ATC CTA", detail: "State changes from 'Add to Bag' to 'Go to Bag' after first successful add.", configuration: "" },
+            { section: "Scope", detail: "Applies across Desktop, Tablet, and Mobile. Out-of-stock products that are not in the cart remain inaccessible on PDP — this modal is cart-presence only.", configuration: "" }
+          ]
+        },
+
+        // ── Exploration 1 ────────────────────────
+        {
+          id: "pdp-last-item-atc-iter-2",
+          label: "Exploration — Low inventory indicator",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Two variants tested: Option 1 surfaces a low-stock indicator on the PDP before the user adds (inventory < n), alerting them proactively. Option 2 shows a post-add indication when inventory reaches zero — the user completes the add and then sees a message confirming this was the last unit. Both were ruled out: the pre-add indicator adds noise for users who don't need it, and the post-add toast blends with the existing 'Added to Bag' confirmation, creating a double-message problem.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-1.png", caption: "Options 1 & 2 — Inventory indicator" },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Exploration 2 ────────────────────────
+        {
+          id: "pdp-last-item-atc-iter-3",
+          label: "Exploration — Secondary component / Quantity stepper",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Option 3 tested restricting the repeat-add action via a secondary UI component rather than disabling the primary CTA — keeping 'Add to Bag' accessible but surfacing a warning inline. Option 4 explored replacing the ATC button entirely with a quantity stepper after first add, allowing users to manage quantity directly from PDP. The stepper was the stronger concept but introduces scope creep (decrement to zero = remove from cart) and increases backend dependency. Set aside in favour of a lighter modal approach.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-2.png", caption: "Options 3 & 4 — Secondary component / Quantity stepper" },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Exploration 3 ────────────────────────
+        {
+          id: "pdp-last-item-atc-iter-4",
+          label: "Exploration — Pop-up for assurance",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Option 5 explored a confirmation modal that appears before the second add attempt, asking the user to confirm before the action completes. The intent was to prevent accidental duplicates by adding a deliberate gate. Ruled out because it adds friction before a failed action — the modal fires even if the user hasn't yet triggered the duplicate — making it feel like an obstacle rather than useful feedback.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-3.png", caption: "Option 5 — Pop-up for assurance" },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Exploration 4 ────────────────────────
+        {
+          id: "pdp-last-item-atc-iter-5",
+          label: "Exploration — CTA state variations",
+          date: "2026-06-18",
+          designer: "Niharika",
+          notes: "Further explorations of Option 5 testing different CTA state labels and visual treatments after first add — cycling through 'Added', 'Go to Bag', 'View Bag', and a greyed-out disabled state. These variants tested how strongly to signal completion and how to balance confirmation with forward momentum. The 'Go to Bag' label was retained in the finalised direction as the clearest action-oriented label that confirms the add while inviting checkout.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-4.png", caption: "Option 5 — CTA state variations" },
+          desktop: { figmaUrl: "", caption: "" }
+        },
+
+        // ── Exploration 5 ────────────────────────
+        {
+          id: "pdp-last-item-atc-iter-6",
+          label: "Exploration — Near-final direction",
+          date: "2026-06-26",
+          designer: "Niharika",
+          notes: "Near-final desktop explorations showing the resolved ATC state change: clean PDP with 'Add to Shopping Bag' → post-add state with confirmation toast. This iteration confirmed the minimal-intervention approach — no quantity stepper, no blocking modal pre-action — letting the CTA state change and the post-add messaging carry the communication weight.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-5.png", caption: "Near-final — Resolved ATC state" },
+          desktop: { figmaUrl: "", caption: "" }
+        }
+
+      ]
+    },
+
+    // ── Feature 4 ──────────────────────────────
     {
       id: "corporate-po",
       name: "Corporate Purchase Order",
