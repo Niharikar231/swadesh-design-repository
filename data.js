@@ -551,7 +551,7 @@ const APP_DATA = {
           date: "2026-06-26",
           designer: "Niharika",
           notes: "",
-          protoTip: "Click \u2018Add to Shopping Bag\u2019 to trigger the last-item-in-cart scenario. The CTA then changes state — click it again to see the modal interaction.",
+          protoTip: "Click ‘Add to Shopping Bag’. The CTA then changes state → click it again to go to bag, visit the product page from the bag and click ‘Add to Shopping Bag’ to trigger the last-item-in-cart scenario and see the modal interaction.",
           designFileUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
           sectionEmbedUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
           tags: ["v1"],
