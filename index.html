@@ -678,6 +678,10 @@
     .screenshot-scroll.desktop-frame {
       height: 540px;
     }
+    .screenshot-scroll.screenshot-canvas {
+      height: auto;
+      max-width: 100%;
+    }
     .screenshot-scroll img {
       width: 100%;
       display: block;
@@ -1207,16 +1211,12 @@ function renderEmbedCard(platform, slot) {
 
   // Screenshot mode — render a scrollable image panel
   if (slot.screenshotUrl) {
+    // Canvas/exploration screenshots: no platform label, full-width display
+    const hasCaption = !!(slot.caption);
     return `
       <div class="proto-card">
-        <div class="proto-card-header">
-          <div class="proto-platform">
-            <div class="platform-icon">${isPlatformMobile ? ICONS.mobile : ICONS.desktop}</div>
-            ${isPlatformMobile ? "Mobile" : "Desktop"}
-          </div>
-          <span class="proto-caption">${slot.caption || ""}</span>
-        </div>
-        <div class="screenshot-scroll ${frameClass}">
+        ${hasCaption ? `<div class="proto-card-header"><span class="proto-caption">${slot.caption}</span></div>` : ""}
+        <div class="screenshot-scroll screenshot-canvas">
           <img src="${slot.screenshotUrl}" alt="${label}" loading="lazy" />
         </div>
       </div>`;

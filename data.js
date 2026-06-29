@@ -553,10 +553,13 @@ const APP_DATA = {
           notes: "",
           tags: ["v1"],
           mobile: {
-            figmaUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
+            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71569-36795&viewport=-33%2C473%2C0.11&t=tFLA0jB7HiQSPBUV-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=71569%3A36795&show-proto-sidebar=1",
             caption: "Mobile · PDP — Last Item ATC"
           },
-          desktop: { figmaUrl: "", caption: "" },
+          desktop: {
+            figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71569-36312&viewport=737%2C491%2C0.11&t=tFLA0jB7HiQSPBUV-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=71569%3A36312&show-proto-sidebar=1",
+            caption: "Desktop · PDP — Last Item ATC"
+          },
           designDecisions: [
             {
               title: "Modal over toast for cart-aware messaging",
@@ -590,8 +593,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "Two variants tested: Option 1 surfaces a low-stock indicator on the PDP before the user adds (inventory < n), alerting them proactively. Option 2 shows a post-add indication when inventory reaches zero — the user completes the add and then sees a message confirming this was the last unit. Both were ruled out: the pre-add indicator adds noise for users who don't need it, and the post-add toast blends with the existing 'Added to Bag' confirmation, creating a double-message problem.",
           tags: ["v2"],
-          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-1.png", caption: "Options 1 & 2 — Inventory indicator" },
-          desktop: { figmaUrl: "", caption: "" }
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-1.png", caption: "Options 1 & 2 — Inventory indicator" }
         },
 
         // ── Exploration 2 ────────────────────────
@@ -602,8 +605,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "Option 3 tested restricting the repeat-add action via a secondary UI component rather than disabling the primary CTA — keeping 'Add to Bag' accessible but surfacing a warning inline. Option 4 explored replacing the ATC button entirely with a quantity stepper after first add, allowing users to manage quantity directly from PDP. The stepper was the stronger concept but introduces scope creep (decrement to zero = remove from cart) and increases backend dependency. Set aside in favour of a lighter modal approach.",
           tags: ["v2"],
-          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-2.png", caption: "Options 3 & 4 — Secondary component / Quantity stepper" },
-          desktop: { figmaUrl: "", caption: "" }
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-2.png", caption: "Options 3 & 4 — Secondary component / Quantity stepper" }
         },
 
         // ── Exploration 3 ────────────────────────
@@ -614,8 +617,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "Option 5 explored a confirmation modal that appears before the second add attempt, asking the user to confirm before the action completes. The intent was to prevent accidental duplicates by adding a deliberate gate. Ruled out because it adds friction before a failed action — the modal fires even if the user hasn't yet triggered the duplicate — making it feel like an obstacle rather than useful feedback.",
           tags: ["v2"],
-          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-3.png", caption: "Option 5 — Pop-up for assurance" },
-          desktop: { figmaUrl: "", caption: "" }
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-3.png", caption: "Option 5 — Pop-up for assurance" }
         },
 
         // ── Exploration 4 ────────────────────────
@@ -626,8 +629,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "Further explorations of Option 5 testing different CTA state labels and visual treatments after first add — cycling through 'Added', 'Go to Bag', 'View Bag', and a greyed-out disabled state. These variants tested how strongly to signal completion and how to balance confirmation with forward momentum. The 'Go to Bag' label was retained in the finalised direction as the clearest action-oriented label that confirms the add while inviting checkout.",
           tags: ["v2"],
-          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-4.png", caption: "Option 5 — CTA state variations" },
-          desktop: { figmaUrl: "", caption: "" }
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-4.png", caption: "Option 5 — CTA state variations" }
         },
 
         // ── Exploration 5 ────────────────────────
@@ -638,8 +641,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "Near-final desktop explorations showing the resolved ATC state change: clean PDP with 'Add to Shopping Bag' → post-add state with confirmation toast. This iteration confirmed the minimal-intervention approach — no quantity stepper, no blocking modal pre-action — letting the CTA state change and the post-add messaging carry the communication weight.",
           tags: ["v2"],
-          mobile: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-5.png", caption: "Near-final — Resolved ATC state" },
-          desktop: { figmaUrl: "", caption: "" }
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-5.png", caption: "Near-final — Resolved ATC state" }
         }
 
       ]
