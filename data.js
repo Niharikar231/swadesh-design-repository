@@ -574,11 +574,6 @@ const APP_DATA = {
               title: "CTA state change post-add",
               problem: "'Add to Bag' persisting after a successful action provides no feedback on what happened and invites repeated clicks that could create duplicate items or confusion.",
               decision: "Transition the CTA label to confirm the completed action (e.g. 'Go to Bag'), directing the user toward checkout rather than looping back to the same action. This closes the interaction and makes the forward path obvious."
-            },
-            {
-              title: "⚠️ Open item — API and cart-link dependency",
-              problem: "The cart-aware messaging logic requires knowing in real time whether the product is in the cart, and the PDP needs a reliable link to cart state to trigger the correct UI.",
-              decision: "⚠️ Pending. API call timing and the PDP–cart data link are unresolved. Awaiting confirmation from tech on feasibility and latency before UI is finalised."
             }
           ],
           annotations: [
