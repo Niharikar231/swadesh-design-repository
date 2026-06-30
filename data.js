@@ -31,9 +31,9 @@ const APP_DATA = {
   //  type: "prd" | "adhoc"
   // ─────────────────────────────────────────────
   tasks: [
-    { id: "search-zero-state",  name: "Search — Zero state",                  status: "shared-for-review", featureId: "search"          },
-    { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "in-progress",       featureId: "cash-collection" },
-    { id: "pdp-last-item-atc", name: "PDP — Last Item ATC",                  status: "in-progress",       featureId: "pdp-last-item-atc" },
+    { id: "search-zero-state",  name: "Search — Zero state",                  status: "handover-complete", featureId: "search"          },
+    { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "paused",            featureId: "cash-collection" },
+    { id: "pdp-last-item-atc", name: "PDP — Last Item ATC",                  status: "handover-complete", featureId: "pdp-last-item-atc" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
     { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
@@ -552,8 +552,8 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "",
           protoTip: "Click ‘Add to Shopping Bag’ → The CTA then changes state → Click ‘Go to Bag’ → Click a product card to go to PDP → Click ‘Add to Shopping Bag’ again to trigger the modal interaction for the last-item-in-cart scenario.",
-          designFileUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
-          sectionEmbedUrl: "https://www.figma.com/design/iUw2jErYvksbS6ch1HeJS1/PDP-%3E-cart---ATC-instances-and-handling?node-id=71569-36311&t=tFLA0jB7HiQSPBUV-4",
+          designFileUrl: "https://www.figma.com/design/IXMjg2SZy8S4S9baQzUg6R/Swadesh---Dev-Handover?node-id=71569-36311&t=skDXnugtGcE7bbAO-4",
+          sectionEmbedUrl: "https://www.figma.com/design/IXMjg2SZy8S4S9baQzUg6R/Swadesh---Dev-Handover?node-id=71569-36311&t=skDXnugtGcE7bbAO-4",
           tags: ["v1"],
           mobile: {
             figmaUrl: "https://www.figma.com/proto/iUw2jErYvksbS6ch1HeJS1/PDP-cart-ATC-instances-and-handling?node-id=71576-49418&viewport=352%2C172%2C0.06&t=tFLA0jB7HiQSPBUV-0&scaling=contain&content-scaling=fixed&starting-point-node-id=71576%3A49418&show-proto-sidebar=1",
