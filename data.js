@@ -35,6 +35,7 @@ const APP_DATA = {
     { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "paused",            featureId: "cash-collection" },
     { id: "pdp-last-item-atc", name: "PDP — Last Item ATC",                  status: "handover-complete", featureId: "pdp-last-item-atc" },
     { id: "pod-failed-payment-nudge", name: "Pay on Delivery — Failed Payment Nudge", status: "shared-for-review", featureId: "pod-failed-payment-nudge" },
+    { id: "homepage-banner-carousel",  name: "Homepage — Banner Carousel",             status: "in-progress",       featureId: "homepage-banner-carousel" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
     { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
@@ -795,6 +796,19 @@ const APP_DATA = {
       emptyStateMessage: "Design documentation for the WhatsApp floater is being prepared and will be available here shortly.",
       intro: {
         requirement: "Design the WhatsApp floating button placement and behaviour.",
+        rationale: "Documentation in progress."
+      },
+      iterations: []
+    },
+
+    // ── Feature 9 ──────────────────────────────
+    {
+      id: "homepage-banner-carousel",
+      name: "Homepage — Banner Carousel",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for the Homepage Banner Carousel is being prepared and will be available here shortly.",
+      intro: {
+        requirement: "Design the banner carousel placement, behaviour, and content rules for the Swadesh homepage.",
         rationale: "Documentation in progress."
       },
       iterations: []
