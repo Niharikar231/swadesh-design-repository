@@ -668,7 +668,7 @@ const APP_DATA = {
           designer: "Niharika",
           notes: "",
           protoTip: "Click ‘Place Order’ → On the payment gateway, click ‘Make Payment’ → Payment fails → Click ‘Pay on Delivery’ on the nudge screen to complete the order.",
-          designFileUrl: "https://www.figma.com/design/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-52801&t=DlOErlBPyUyAsvUg-4",
+          designFileUrl: "https://www.figma.com/design/IXMjg2SZy8S4S9baQzUg6R/Swadesh---Dev-Handover?node-id=71849-52801&t=jjtiO80L7u31xbTq-4",
           sectionEmbedUrl: "https://www.figma.com/design/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-52801&t=DlOErlBPyUyAsvUg-4",
           tags: ["v1"],
           mobile: {
