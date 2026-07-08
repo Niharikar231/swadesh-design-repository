@@ -776,9 +776,11 @@
       gap: 0;
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      overflow: hidden;
       box-shadow: var(--shadow-sm);
+      overflow: visible;
     }
+    .task-row:first-child { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+    .task-row:last-child  { border-radius: 0 0 var(--radius-md) var(--radius-md); border-bottom: none; }
 
     .task-row {
       display: flex;
@@ -861,6 +863,46 @@
       user-select: none;
     }
     .status-pill.paused { background: #F4F4F5; color: #71717A; }
+
+    /* ── Status chip dropdown ─────────────────── */
+    .status-chip-wrap { position: relative; flex-shrink: 0; }
+    .status-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      cursor: pointer; border: none; font-family: inherit;
+      font-size: 0.75rem; font-weight: 600;
+      padding: 3px 9px 3px 11px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap; transition: opacity 0.1s;
+    }
+    .status-chip:hover { opacity: 0.8; }
+    .status-chip-caret { flex-shrink: 0; opacity: 0.7; }
+    .status-dropdown {
+      display: none; position: absolute; right: 0; top: calc(100% + 6px);
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      z-index: 200; min-width: 190px; padding: 4px; overflow: hidden;
+    }
+    .status-dropdown.open { display: block; }
+    .status-dropdown-option {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 7px 10px; border: none; background: none;
+      font-family: inherit; font-size: 0.8125rem; font-weight: 500;
+      color: var(--text-primary); cursor: pointer; border-radius: 6px;
+      text-align: left;
+    }
+    .status-dropdown-option:hover { background: var(--accent-light); }
+    .status-dropdown-option.active { background: var(--accent-light); }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .status-dot.in-progress       { background: #4338CA; }
+    .status-dot.shared-for-review  { background: #C2410C; }
+    .status-dot.handover-complete  { background: var(--accent-dark); }
+    .status-dot.yet-to-start      { background: #A1A1AA; }
+    .status-dot.blocked           { background: #DC2626; }
+    .status-dot.rejected          { background: #A1A1AA; }
+    .status-dot.completed         { background: #16A34A; }
+    .status-dot.paused            { background: #A1A1AA; }
 
     /* ─── Sandbox Section ───────────────────────────── */
     .sandbox-section {
@@ -1474,8 +1516,14 @@ const DRAG_HANDLE_SVG = `<svg width="10" height="14" viewBox="0 0 10 14" fill="c
   <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
 </svg>`;
 
+const CARET_SVG = `<svg class="status-chip-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+  <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
 function renderHomeDashboard(tasks) {
-  const stored = JSON.parse(localStorage.getItem('swadesh-task-order') || 'null');
+  const stored   = JSON.parse(localStorage.getItem('swadesh-task-order')      || 'null');
+  const overrides = JSON.parse(localStorage.getItem('swadesh-status-overrides') || '{}');
+
   let sorted = [...(tasks || [])];
   if (stored) {
     sorted.sort((a, b) => {
@@ -1486,20 +1534,70 @@ function renderHomeDashboard(tasks) {
     });
   }
 
-  const rows = sorted.map((t, i) => `
-    <div class="task-row status-${t.status}" data-task-id="${t.id}"${t.featureId ? ` data-feature="${t.featureId}"` : ''} draggable="true">
+  const allStatuses = Object.entries(STATUS_LABELS);
+
+  const rows = sorted.map((t, i) => {
+    const s = overrides[t.id] || t.status;
+    const opts = allStatuses.map(([k, v]) =>
+      `<button class="status-dropdown-option${k === s ? ' active' : ''}" data-status="${k}" onclick="setTaskStatus('${t.id}','${k}')">`+
+      `<span class="status-dot ${k}"></span>${v}</button>`
+    ).join('');
+    return `
+    <div class="task-row status-${s}" data-task-id="${t.id}"${t.featureId ? ` data-feature="${t.featureId}"` : ''} draggable="true">
       <div class="task-row-left">
         <span class="drag-handle" title="Drag to reorder" onclick="event.stopPropagation()">${DRAG_HANDLE_SVG}</span>
         <span class="task-number">${i + 1}</span>
         <span class="task-name">${t.name}</span>
       </div>
-      <span class="status-pill ${t.status}">${STATUS_LABELS[t.status] || t.status}</span>
-    </div>`).join("");
+      <div class="status-chip-wrap" onclick="event.stopPropagation()">
+        <button class="status-pill status-chip ${s}" onclick="toggleStatusDropdown(this)">
+          <span class="status-chip-label">${STATUS_LABELS[s] || s}</span>${CARET_SVG}
+        </button>
+        <div class="status-dropdown">${opts}</div>
+      </div>
+    </div>`;
+  }).join('');
 
   return `<div class="home-panel">
     <p class="tasks-section-title">Ongoing work</p>
     <div class="task-list" id="task-list-drag">${rows}</div>
   </div>`;
+}
+
+function toggleStatusDropdown(btn) {
+  const drop = btn.nextElementSibling;
+  const isOpen = drop.classList.contains('open');
+  document.querySelectorAll('.status-dropdown.open').forEach(d => d.classList.remove('open'));
+  if (!isOpen) drop.classList.add('open');
+}
+
+function setTaskStatus(taskId, newStatus) {
+  const overrides = JSON.parse(localStorage.getItem('swadesh-status-overrides') || '{}');
+  overrides[taskId] = newStatus;
+  localStorage.setItem('swadesh-status-overrides', JSON.stringify(overrides));
+
+  const row = document.querySelector(`.task-row[data-task-id="${taskId}"]`);
+  if (!row) return;
+
+  // Update row class
+  row.className = row.className.replace(/\bstatus-\S+/g, '') + ` status-${newStatus}`;
+
+  // Update chip class + label
+  const chip = row.querySelector('.status-chip');
+  if (chip) {
+    Object.keys(STATUS_LABELS).forEach(k => chip.classList.remove(k));
+    chip.classList.add(newStatus);
+    const lbl = chip.querySelector('.status-chip-label');
+    if (lbl) lbl.textContent = STATUS_LABELS[newStatus] || newStatus;
+  }
+
+  // Update active option + close
+  const drop = row.querySelector('.status-dropdown');
+  if (drop) {
+    drop.querySelectorAll('.status-dropdown-option').forEach(o =>
+      o.classList.toggle('active', o.dataset.status === newStatus));
+    drop.classList.remove('open');
+  }
 }
 
 function initTaskDragDrop(container) {
@@ -1552,9 +1650,16 @@ function initTaskDragDrop(container) {
   });
 
   list.addEventListener('click', e => {
-    if (e.target.closest('.drag-handle')) return;
+    if (e.target.closest('.drag-handle') || e.target.closest('.status-chip-wrap')) return;
     const row = e.target.closest('.task-row[data-feature]');
     if (row) activateTab(row.dataset.feature);
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.status-chip-wrap')) {
+      document.querySelectorAll('.status-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
   });
 }
 
