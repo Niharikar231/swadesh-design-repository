@@ -837,6 +837,31 @@
     .task-row[data-feature] { cursor: pointer; transition: background 0.12s; }
     .task-row[data-feature]:hover { background: var(--accent-light); }
 
+    .drag-handle {
+      cursor: grab;
+      color: var(--text-muted);
+      opacity: 0.3;
+      flex-shrink: 0;
+      line-height: 0;
+      padding-right: 2px;
+      user-select: none;
+    }
+    .drag-handle:hover { opacity: 0.65; }
+    .drag-handle:active { cursor: grabbing; }
+    .task-row.dragging  { opacity: 0.35; }
+    .task-row.drag-over-top    { box-shadow: inset 0 2px 0 0 var(--accent-dark); }
+    .task-row.drag-over-bottom { box-shadow: inset 0 -2px 0 0 var(--accent-dark); }
+    .task-number {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 16px;
+      text-align: right;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .status-pill.paused { background: #F4F4F5; color: #71717A; }
+
     /* ─── Sandbox Section ───────────────────────────── */
     .sandbox-section {
       margin-top: 56px;
@@ -1439,20 +1464,98 @@ const STATUS_LABELS = {
   "yet-to-start":       "Yet to start",
   "blocked":            "Blocked",
   "rejected":           "Rejected",
-  "completed":          "Completed"
+  "completed":          "Completed",
+  "paused":             "Paused"
 };
 
+const DRAG_HANDLE_SVG = `<svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor" aria-hidden="true">
+  <circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/>
+  <circle cx="2" cy="7" r="1.5"/><circle cx="8" cy="7" r="1.5"/>
+  <circle cx="2" cy="12" r="1.5"/><circle cx="8" cy="12" r="1.5"/>
+</svg>`;
+
 function renderHomeDashboard(tasks) {
-  const rows = (tasks || []).map(t => `
-    <div class="task-row status-${t.status}"${t.featureId ? ` data-feature="${t.featureId}" onclick="activateTab('${t.featureId}')"` : ''}>
-      <span class="task-name">${t.name}</span>
+  const stored = JSON.parse(localStorage.getItem('swadesh-task-order') || 'null');
+  let sorted = [...(tasks || [])];
+  if (stored) {
+    sorted.sort((a, b) => {
+      const ai = stored.indexOf(a.id); const bi = stored.indexOf(b.id);
+      if (ai === -1 && bi === -1) return 0;
+      if (ai === -1) return 1; if (bi === -1) return -1;
+      return ai - bi;
+    });
+  }
+
+  const rows = sorted.map((t, i) => `
+    <div class="task-row status-${t.status}" data-task-id="${t.id}"${t.featureId ? ` data-feature="${t.featureId}"` : ''} draggable="true">
+      <div class="task-row-left">
+        <span class="drag-handle" title="Drag to reorder" onclick="event.stopPropagation()">${DRAG_HANDLE_SVG}</span>
+        <span class="task-number">${i + 1}</span>
+        <span class="task-name">${t.name}</span>
+      </div>
       <span class="status-pill ${t.status}">${STATUS_LABELS[t.status] || t.status}</span>
     </div>`).join("");
 
   return `<div class="home-panel">
     <p class="tasks-section-title">Ongoing work</p>
-    <div class="task-list">${rows}</div>
+    <div class="task-list" id="task-list-drag">${rows}</div>
   </div>`;
+}
+
+function initTaskDragDrop(container) {
+  const list = container.querySelector('#task-list-drag');
+  if (!list) return;
+  let dragSrc = null;
+
+  list.addEventListener('dragstart', e => {
+    const row = e.target.closest('.task-row');
+    if (!row) return;
+    dragSrc = row;
+    setTimeout(() => row.classList.add('dragging'), 0);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', row.dataset.taskId || '');
+  });
+
+  list.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const row = e.target.closest('.task-row');
+    if (!row || row === dragSrc) return;
+    list.querySelectorAll('.task-row').forEach(r => r.classList.remove('drag-over-top', 'drag-over-bottom'));
+    const mid = row.getBoundingClientRect().top + row.getBoundingClientRect().height / 2;
+    row.classList.add(e.clientY < mid ? 'drag-over-top' : 'drag-over-bottom');
+  });
+
+  list.addEventListener('dragleave', e => {
+    const row = e.target.closest('.task-row');
+    if (row) row.classList.remove('drag-over-top', 'drag-over-bottom');
+  });
+
+  list.addEventListener('drop', e => {
+    e.preventDefault();
+    const row = e.target.closest('.task-row');
+    list.querySelectorAll('.task-row').forEach(r => r.classList.remove('drag-over-top', 'drag-over-bottom'));
+    if (!row || !dragSrc || row === dragSrc) return;
+    const mid = row.getBoundingClientRect().top + row.getBoundingClientRect().height / 2;
+    list.insertBefore(dragSrc, e.clientY < mid ? row : row.nextSibling);
+    list.querySelectorAll('.task-row').forEach((r, i) => {
+      const n = r.querySelector('.task-number'); if (n) n.textContent = i + 1;
+    });
+    localStorage.setItem('swadesh-task-order', JSON.stringify(
+      [...list.querySelectorAll('.task-row')].map(r => r.dataset.taskId)
+    ));
+  });
+
+  list.addEventListener('dragend', () => {
+    list.querySelectorAll('.task-row').forEach(r => r.classList.remove('dragging', 'drag-over-top', 'drag-over-bottom'));
+    dragSrc = null;
+  });
+
+  list.addEventListener('click', e => {
+    if (e.target.closest('.drag-handle')) return;
+    const row = e.target.closest('.task-row[data-feature]');
+    if (row) activateTab(row.dataset.feature);
+  });
 }
 
 function renderReferences(refs) {
@@ -1638,6 +1741,7 @@ function buildUI() {
   homePanel.setAttribute("role", "tabpanel");
   homePanel.innerHTML = renderHomeDashboard(data.tasks || []);
   main.appendChild(homePanel);
+  initTaskDragDrop(homePanel);
 
   (data.features || []).forEach((feature, idx) => {
     // Tab button
