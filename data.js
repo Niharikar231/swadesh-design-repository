@@ -644,6 +644,8 @@ const APP_DATA = {
           desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-5.png", caption: "Near-final — Resolved ATC state" }
         }
 
+      ]
+    },
 
     // ── Feature 4 ──────────────────────────────
     {
@@ -715,7 +717,7 @@ const APP_DATA = {
           tags: ["v2"],
           mobile: { figmaUrl: "", caption: "" },
           desktop: { figmaUrl: "", screenshotUrl: "pod-iter-section2.png", caption: "V2 — Transaction limit exceeded → Pay on Delivery nudge" }
-,
+        },
 
         // ── Exploration — All screens ─────────────────────────
         {
