@@ -644,76 +644,8 @@ const APP_DATA = {
           desktop: { figmaUrl: "", screenshotUrl: "pdp-atc-iter-5.png", caption: "Near-final — Resolved ATC state" }
         }
 
-      ]
-    },
 
     // ── Feature 4 ──────────────────────────────
-    {
-      id: "corporate-po",
-      name: "Corporate Purchase Order",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for Corporate Purchase Order is being prepared and will be available here shortly.",
-      intro: { requirement: "Design the corporate purchase order flow.", rationale: "Documentation in progress." },
-      iterations: []
-    },
-
-    // ── Feature 4 ──────────────────────────────
-    {
-      id: "ops-pay-link",
-      name: "Ops Assisted pay-link",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for Ops Assisted pay-link is being prepared and will be available here shortly.",
-      intro: { requirement: "Design the ops-assisted pay-link flow.", rationale: "Documentation in progress." },
-      iterations: []
-    },
-
-    // ── Feature 5 ──────────────────────────────
-    {
-      id: "partial-payment",
-      name: "Partial Payment for Bespoke orders",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for Partial Payment for Bespoke orders is being prepared and will be available here shortly.",
-      intro: { requirement: "Design the partial payment flow for bespoke orders.", rationale: "Documentation in progress." },
-      iterations: []
-    },
-
-    // ── Feature 6 ──────────────────────────────
-    {
-      id: "tcs",
-      name: "Tax collection at source",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for Tax collection at source is being prepared and will be available here shortly.",
-      intro: { requirement: "Design the tax collection at source flow.", rationale: "Documentation in progress." },
-      iterations: []
-    },
-
-    // ── Feature 7 ──────────────────────────────
-    {
-      id: "mop",
-      name: "MOP",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for MOP is being prepared and will be available here shortly.",
-      intro: {
-        requirement: "Design the mode of payment selection screen.",
-        rationale: "Documentation in progress."
-      },
-      iterations: []
-    },
-
-    // ── Feature 8 ──────────────────────────────
-    {
-      id: "whatsapp-floater",
-      name: "Whatsapp floater",
-      emptyStateTitle: "Documentation in progress",
-      emptyStateMessage: "Design documentation for the WhatsApp floater is being prepared and will be available here shortly.",
-      intro: {
-        requirement: "Design the WhatsApp floating button placement and behaviour.",
-        rationale: "Documentation in progress."
-      },
-      iterations: []
-    },
-
-    // ── Feature 9 ──────────────────────────────
     {
       id: "pod-failed-payment-nudge",
       locked: true,
@@ -783,9 +715,87 @@ const APP_DATA = {
           tags: ["v2"],
           mobile: { figmaUrl: "", caption: "" },
           desktop: { figmaUrl: "", screenshotUrl: "pod-iter-section2.png", caption: "V2 — Transaction limit exceeded → Pay on Delivery nudge" }
+,
+
+        // ── Exploration — All screens ─────────────────────────
+        {
+          id: "pod-failed-payment-nudge-iter-4",
+          label: "All explorations — copy & layout variations",
+          date: "2026-07-08",
+          designer: "Niharika",
+          notes: "All screen explorations covering nudge copy approaches and layout variations — generic payment failure messages, error-specific states, and POD offer presentation styles.",
+          tags: ["v1", "v2"],
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pod-all-screens.png", caption: "All screen explorations" }
         }
 
       ]
+    },
+
+    // ── Feature 5 ──────────────────────────────
+    {
+      id: "corporate-po",
+      name: "Corporate Purchase Order",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Corporate Purchase Order is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the corporate purchase order flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 4 ──────────────────────────────
+    {
+      id: "ops-pay-link",
+      name: "Ops Assisted pay-link",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Ops Assisted pay-link is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the ops-assisted pay-link flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 5 ──────────────────────────────
+    {
+      id: "partial-payment",
+      name: "Partial Payment for Bespoke orders",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Partial Payment for Bespoke orders is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the partial payment flow for bespoke orders.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 6 ──────────────────────────────
+    {
+      id: "tcs",
+      name: "Tax collection at source",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for Tax collection at source is being prepared and will be available here shortly.",
+      intro: { requirement: "Design the tax collection at source flow.", rationale: "Documentation in progress." },
+      iterations: []
+    },
+
+    // ── Feature 7 ──────────────────────────────
+    {
+      id: "mop",
+      name: "MOP",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for MOP is being prepared and will be available here shortly.",
+      intro: {
+        requirement: "Design the mode of payment selection screen.",
+        rationale: "Documentation in progress."
+      },
+      iterations: []
+    },
+
+    // ── Feature 8 ──────────────────────────────
+    {
+      id: "whatsapp-floater",
+      name: "Whatsapp floater",
+      emptyStateTitle: "Documentation in progress",
+      emptyStateMessage: "Design documentation for the WhatsApp floater is being prepared and will be available here shortly.",
+      intro: {
+        requirement: "Design the WhatsApp floating button placement and behaviour.",
+        rationale: "Documentation in progress."
+      },
+      iterations: []
     }
 
     // ── Add more features below this line ──────
