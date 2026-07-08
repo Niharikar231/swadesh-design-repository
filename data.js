@@ -34,6 +34,7 @@ const APP_DATA = {
     { id: "search-zero-state",  name: "Search — Zero state",                  status: "handover-complete", featureId: "search"          },
     { id: "cash-collection",    name: "Doorstep Cash Collection",             status: "paused",            featureId: "cash-collection" },
     { id: "pdp-last-item-atc", name: "PDP — Last Item ATC",                  status: "handover-complete", featureId: "pdp-last-item-atc" },
+    { id: "pod-failed-payment-nudge", name: "Pay on Delivery — Failed Payment Nudge", status: "shared-for-review", featureId: "pod-failed-payment-nudge" },
     { id: "corporate-po",       name: "Corporate Purchase Order",              status: "yet-to-start",      featureId: "corporate-po"    },
     { id: "ops-pay-link",       name: "Ops Assisted pay-link",                status: "yet-to-start",      featureId: "ops-pay-link"    },
     { id: "partial-payment",    name: "Partial Payment for Bespoke orders",   status: "yet-to-start",      featureId: "partial-payment" },
@@ -710,6 +711,81 @@ const APP_DATA = {
         rationale: "Documentation in progress."
       },
       iterations: []
+    },
+
+    // ── Feature 9 ──────────────────────────────
+    {
+      id: "pod-failed-payment-nudge",
+      locked: true,
+      name: "Pay on Delivery — Failed Payment Nudge",
+      intro: {
+        requirement: "When payment fails for an eligible order (≤ ₹1,99,990), nudge the user to place the order via Pay on Delivery instead.",
+        rationale: "Payment failures frequently lead to order abandonment even when the user intends to complete the purchase. For orders within the COD-eligible limit, surfacing Pay on Delivery as an immediate fallback on the failure screen helps recover otherwise-lost conversions — particularly for users in areas where digital payment reliability is lower.",
+        prdUrl: "https://rilcloud.sharepoint.com/:w:/r/sites/SwadeshProductTech/_layouts/15/Doc.aspx?sourcedoc=%7B930FCA98-C407-4E9F-99AA-2B43A1C71D2D%7D&file=PRD%20Pay%20on%20Delivery%20Nudge%20for%20Failed%20Payments.docx&action=default&mobileredirect=true"
+      },
+      iterationsDescription: "Two design phases are documented: V1 with a generic payment failure message (current implementation, limited by the payment gateway) and V2 with error-specific messaging (planned, subject to the gateway exposing specific error codes).",
+      iterations: [
+
+        // ── Finalised iteration ──────────────────────
+        {
+          id: "pod-failed-payment-nudge-iter-1",
+          label: "Payment failure — Nudge to Pay on Delivery",
+          date: "2026-07-08",
+          designer: "Niharika",
+          notes: "",
+          protoTip: "Click ‘Place Order’ → On the payment gateway, click ‘Make Payment’ → Payment fails → Click ‘Pay on Delivery’ on the nudge screen to complete the order.",
+          designFileUrl: "https://www.figma.com/design/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-52801&t=DlOErlBPyUyAsvUg-4",
+          sectionEmbedUrl: "https://www.figma.com/design/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-52801&t=DlOErlBPyUyAsvUg-4",
+          tags: ["v1"],
+          mobile: {
+            figmaUrl: "https://www.figma.com/proto/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-64764&scaling=contain&content-scaling=fixed&starting-point-node-id=71849%3A64764&show-proto-sidebar=1",
+            caption: "Mobile · Pay on Delivery Nudge"
+          },
+          desktop: {
+            figmaUrl: "https://www.figma.com/proto/gDqkWc50tPJ4fuilsJpm7W/POD-nudge?node-id=71849-67477&scaling=contain&content-scaling=fixed&starting-point-node-id=71849%3A67477&show-proto-sidebar=1",
+            caption: "Desktop · Pay on Delivery Nudge"
+          },
+          designDecisions: [
+            {
+              title: "Online retry as primary, POD as fallback",
+              problem: "Business prioritises recovering the failed online payment, not switching users to COD by default.",
+              decision: "The failure screen keeps ‘Try again’ as the dominant CTA. The POD nudge sits below it as a secondary option — visually de-emphasised to signal it’s a fallback, not the recommended path."
+            },
+            {
+              title: "Two-phase implementation — generic error first",
+              problem: "Fynd’s payment gateway cannot surface specific error codes at this stage, preventing error-contextual messaging.",
+              decision: "V1 launches with a generic failure message and a uniform POD nudge across all failure types. V2 — with error-specific copy and targeted nudges — is planned only if the technical limitation is resolved and feature adoption justifies the additional investment.",
+              constraint: "Fynd payment gateway does not expose specific error codes in the current integration."
+            }
+          ],
+          annotations: []
+        },
+
+        // ── V1 Exploration ────────────────────────
+        {
+          id: "pod-failed-payment-nudge-iter-2",
+          label: "V1 — Generic payment failure",
+          date: "2026-07-08",
+          designer: "Niharika",
+          notes: "Shows the full flow for a generic ‘Payment not processed’ failure — the nudge surfaces with a ‘Place order & Pay on Delivery’ option as a secondary fallback below the primary retry CTA.",
+          tags: ["v1"],
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pod-iter-section1.png", caption: "V1 — Payment not processed → Pay on Delivery nudge" }
+        },
+
+        // ── V2 Exploration ────────────────────────
+        {
+          id: "pod-failed-payment-nudge-iter-3",
+          label: "V2 — Error-specific nudge",
+          date: "2026-07-08",
+          designer: "Niharika",
+          notes: "Shows how the experience evolves when the payment gateway can surface the exact failure reason (e.g. ‘Transaction limit exceeded’). The nudge copy is contextually adapted to the error type.",
+          tags: ["v2"],
+          mobile: { figmaUrl: "", caption: "" },
+          desktop: { figmaUrl: "", screenshotUrl: "pod-iter-section2.png", caption: "V2 — Transaction limit exceeded → Pay on Delivery nudge" }
+        }
+
+      ]
     }
 
     // ── Add more features below this line ──────
